@@ -1,6 +1,7 @@
-const { DataTypes, Sequelize } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
+    // return sequelize.define('activity', { // si no hago un return aca, va a ser undefined
     sequelize.define('Activity', {
         name: {
             type: DataTypes.STRING
@@ -16,10 +17,16 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
         },
         season: {
-            type: DataTypes.ENUM('Verano', 'Otoño', 'Invierno', 'Primavera')
+            type: DataTypes.ENUM('summer', 'fall', 'winter', 'spring')
         }
     },
     {
-        timestamps: false
-    })
+        timestamps: true,
+        createdAt: false,
+        updatedAt: false,
+      }
+    // {
+    //     timestamps: false
+    // }
+    )
 }

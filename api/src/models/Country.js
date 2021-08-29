@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
+  // return sequelize.define('Country', { // si no hago un return aca, va a ser undefined
   sequelize.define('Country', {
     alpha3Code: {
       type: DataTypes.STRING,
@@ -17,7 +18,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    continent: {
+    region: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    capital: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -25,12 +30,8 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    capital: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     area: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING, // con INTEGER me rompe
       allowNull: true
     },
     population: {
