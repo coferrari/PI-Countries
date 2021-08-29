@@ -8,11 +8,16 @@ module.exports = (sequelize) => {
     alpha3Code: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      unique: true,
+      validate: {
+        isAlpha: true
+      }
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     flag: {
       type: DataTypes.STRING,

@@ -1,33 +1,8 @@
 const { Router } = require("express");
-const { Country } = require("../db");
+const { Country, Activity, Op} = require("../db");
 const axios = require("axios");
 
 const router = Router();
-
-// router.get('/', async (req, res) => {
-//     // res.send('Soy la ruta countries')
-//     const countries = await Country.findAll()
-//     if (!countries) return res.sendStatus(404);
-//     res.json(countries)
-// });
-
-// router.get('/', (req, res, next) => {
-//     // res.send('Soy la ruta countries')
-//     return Country.findAll()
-//     .then((countries) => res.send(countries))
-//     .catch(error => next(error))
-// })
-
-// router.get('/', async (req, res, next) => {
-//     try {
-//         const countries = await Country.findAll();
-//         res.json(countries);
-//     } catch (error) {
-//         next(error);
-//     }
-// })
-
-
 
 router.get('/', async (req, res) => {
     try {
@@ -54,17 +29,48 @@ router.get('/', async (req, res) => {
             res.status(200).json(countriesDB)
         }
     } catch (error) {
-        res.status(404).json({error: error})
+        res.status(404).json({ error: error })
     }
 });
 
+
 router.get("/", async (req, res) => {
-  // const { name } = req.query;
-  // try {
-  //     const country = await Country.find
-  // } catch (error) {
-  //     res.send(error);
-  // }
+    const { name } = req.query;
+    console.log(name)
+    try {
+        const country = await Country.findAll({
+            where: {
+                name: {
+                    [Op.iLike]: `%${name}%`
+                }
+            }
+        })
+        res.json(country || 'Country not found')
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+router.get('/:idPais', async (req, res) => {
+    const { idPais } = req.params;
+    if (idPais.length === 3) {
+        try {
+            const country = await Country.findByPk(idPais.toUpperCase(), {
+                include: [{
+                    model: Activity,
+                    attributes: ['name', 'difficulty', 'duration', 'season'],
+                    through: {
+                        attributes: []
+                    }
+                }],
+            })
+            res.json(country || 'Country not found')
+        } catch (error) {
+            res.send(error)
+        }
+    } else {
+        res.status(404).json('Country code should contain 3 characters')
+    }
 });
 
 module.exports = router;
