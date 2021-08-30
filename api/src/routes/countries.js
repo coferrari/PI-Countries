@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const { Country, Activity, Op} = require("../db");
+const { Country, Activity, Op } = require("../db");
 const axios = require("axios");
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const countriesDB = await Country.findAll();
         if (countriesDB.length === 0) {
@@ -33,8 +33,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-
-router.get("/", async (req, res) => {
+router.get('/search', async (req, res) => {
     const { name } = req.query;
     console.log(name)
     try {
@@ -45,31 +44,71 @@ router.get("/", async (req, res) => {
                 }
             }
         })
-        res.json(country || 'Country not found')
+        if (country.length === 0) {
+            res.send('Country not found')
+        }
+        res.json(country)
     } catch (error) {
         res.send(error);
     }
 });
 
-router.get('/:idPais', async (req, res) => {
-    const { idPais } = req.params;
-    if (idPais.length === 3) {
-        try {
-            const country = await Country.findByPk(idPais.toUpperCase(), {
-                include: [{
-                    model: Activity,
-                    attributes: ['name', 'difficulty', 'duration', 'season'],
-                    through: {
-                        attributes: []
-                    }
-                }],
-            })
-            res.json(country || 'Country not found')
-        } catch (error) {
-            res.send(error)
+router.get('/order/alphdown', async (req, res) => {
+    try {
+        const countries = await Country.findAll({
+            order: [
+                ['name', 'DESC']
+            ]
+        })
+        res.json(countries || 'Country not found')
+    } catch (error) {
+        res.send(error)
+    }
+});
+
+router.get('/order/popdown', async (req, res) => {
+    try {
+        const countries = await Country.findAll({
+            order: [
+                ['population', 'DESC']
+            ]
+        })
+        res.json(countries || 'Not found')
+
+    } catch (error) {
+        res.send(error)
+    }
+});
+
+router.get('/order/popup', async (req, res) => {
+    try {
+        const countries = await Country.findAll({
+            order: [
+                ['population', 'ASC']
+            ]
+        })
+        res.json(countries || 'Not found')
+
+    } catch (error) {
+        res.send(error)
+    }
+});
+
+router.get('/order/:region', async (req, res) => {
+    let { region } = req.params;
+    region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase())
+    try {
+        const countriesByRegion = await Country.findAll({
+            where: {
+                region: region
+            }
+        })
+        if (!countriesByRegion.length) {
+            res.send('Region not found')
         }
-    } else {
-        res.status(404).json('Country code should contain 3 characters')
+        res.send(countriesByRegion)
+    } catch (error) {
+        res.send(error)
     }
 });
 
