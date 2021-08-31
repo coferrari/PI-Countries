@@ -79,7 +79,6 @@ router.get('/:page', async (req, res) => {
 
 router.get('/search/country', async (req, res) => {
     const { name } = req.query;
-    console.log(name)
     try {
         const country = await Country.findAll({
             where: {
@@ -97,48 +96,47 @@ router.get('/search/country', async (req, res) => {
     }
 });
 
-router.get('/order/alphdown', async (req, res) => {
+router.get('/order/:order', async (req, res) => {
+    const { order } = req.params;
     try {
-        const countries = await Country.findAll({
-            order: [
-                ['name', 'DESC']
-            ]
-        })
-        res.json(countries || 'Country not found')
+        if (order === 'Z-A') {
+            const countries = await Country.findAll({
+                order: [
+                    ['name', 'DESC']
+                ]
+            })
+            res.json(countries || 'Country not found')
+        }
+        if (order === 'A-Z') {
+            const countries = await Country.findAll({
+                order: [
+                    ['name', 'ASC']
+                ]
+            })
+            res.json(countries || 'Country not found')
+        }
+        if (order === 'popdown') {
+            const countries = await Country.findAll({
+                order: [
+                    ['population', 'DESC']
+                ]
+            })
+            res.json(countries || 'Not found')
+        }
+        if (order === 'popup') {
+            const countries = await Country.findAll({
+                order: [
+                    ['population', 'ASC']
+                ]
+            })
+            res.json(countries || 'Not found')
+        }
     } catch (error) {
         res.send(error)
     }
 });
-
-router.get('/order/popdown', async (req, res) => {
-    try {
-        const countries = await Country.findAll({
-            order: [
-                ['population', 'DESC']
-            ]
-        })
-        res.json(countries || 'Not found')
-
-    } catch (error) {
-        res.send(error)
-    }
-});
-
-router.get('/order/popup', async (req, res) => {
-    try {
-        const countries = await Country.findAll({
-            order: [
-                ['population', 'ASC']
-            ]
-        })
-        res.json(countries || 'Not found')
-
-    } catch (error) {
-        res.send(error)
-    }
-});
-
-router.get('/order/:region', async (req, res) => {
+// ver de hacerlo dinamico en el otro get de order
+router.get('/region/:region', async (req, res) => {
     let { region } = req.params;
     region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase())
     try {
