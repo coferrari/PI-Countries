@@ -5,10 +5,15 @@ const router = Router();
 
 // aca entiendo que deberian llegar en la landing page, cuando pones ingresar
 
-// HACER!
-// router.get('/', async (req, res, next) => {
 
-// });
+router.get('/', async (req, res, next) => {
+    try {
+        const countries = await Country.findAll();
+        res.json(countries);
+    } catch (error) {
+        res.send(error);
+    }
+});
 
 // el bulk create me reemplaza esto
 // router.get('/', async (req, res, next) => {
@@ -48,7 +53,6 @@ const router = Router();
 router.get('/:page', async (req, res) => {
     const { page } = req.params;
     const pageNumber = parseInt(page); 
-
     try {
         if (pageNumber === 1) {
             const size = 9;
@@ -57,11 +61,11 @@ router.get('/:page', async (req, res) => {
             });
             res.json(countries);
         }
-        if (pageNumber > 1 && pageNumber < 25) {
+        if (pageNumber > 1 && pageNumber <= 26) {
             const size = 10;
             const countries = await Country.findAll({
                 limit: size,
-                offset: pageNumber * size
+                offset: (pageNumber * size) - size - 1
             });
             res.json(countries);
         }
