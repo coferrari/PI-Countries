@@ -3,6 +3,8 @@ const { Country, Activity } = require('../db');
 
 const router = Router();
 
+// buscar por pais y actividad
+
 // falta incluir los paises
 router.get('/', async (req, res) => {
     try {
