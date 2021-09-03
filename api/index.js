@@ -30,12 +30,13 @@ server.get('/', (req, res) => {
 
 // BULK CREATE
 // Syncing all the models at once.
+// agregar un .catch()
 conn.sync({ force: true })
   .then(async () => {
     const countriesApi = await axios.get('https://restcountries.eu/rest/v2/all');
     let countries = countriesApi.data;
     // console.log(countries.data[0])
-    countries = countries.map(country => {
+    if (countries) {countries = countries.map(country => {
       return {
         alpha3Code: country.alpha3Code,
         name: country.name,
@@ -46,7 +47,8 @@ conn.sync({ force: true })
         area: country.area,
         population: country.population
       }
-    });
+    })
+  };
     await Country.bulkCreate(countries);
     server.listen(3001, () => {
       console.log('%s listening at 3001'); // eslint-disable-line no-console

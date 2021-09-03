@@ -1,29 +1,36 @@
 import Axios from 'axios';
 import {
     GET_COUNTRIES,
-    GET_COUNTRY_DETAIL,
+    GET_COUNTRY_DETAIL_REQUEST,
+    GET_COUNTRY_DETAIL_SUCCESS,
+    CLEAR_COUNTRY_DETAIL,
     SEARCH_COUNTRIES_REQUEST,
     SEARCH_COUNTRIES_SUCCESS,
     SEARCH_COUNTRIES_FAILURE,
     GET_ACTIVITIES,
     ADD_COUNTRY_FAV,
     REMOVE_COUNTRY_FAV,
+    FILTER_REGION,
+    ORDER_COUNTRIES,
 
     URL_COUNTRIES,
     URL_COUNTRIES_SEARCH_COUNTRY,
-    URL_COUNTRY
+    URL_COUNTRY,
+    URL_FILTER_REGION,
+    URL_ORDER
 
 } from './types';
 
-export const getCountries = () => {
+export const getCountries = (page) => {
     return (dispatch) => {
-        Axios.get(`${URL_COUNTRIES}`)
-        .then(response => {
-            dispatch({
-                type: GET_COUNTRIES,
-                payload: response.data
+        Axios.get(`${URL_COUNTRIES}/${page}`)
+            .then(response => {
+                dispatch({
+                    type: GET_COUNTRIES,
+                    // payload: response.data.rows
+                    payload: response.data
+                })
             })
-        })
         // .catch(error => {
 
         // })
@@ -31,20 +38,37 @@ export const getCountries = () => {
 
 };
 
+export const getCountryDetailRequest = () => {
+    return {
+        type: GET_COUNTRY_DETAIL_REQUEST
+    }
+};
+
+export const getCountryDetailSuccess = (alpha3Code) => {
+    return {
+        type: GET_COUNTRY_DETAIL_SUCCESS,
+        payload: alpha3Code
+    }
+};
+
 export const getCountryDetail = (alpha3code) => {
     return (dispatch) => {
+        dispatch(getCountryDetailRequest())
         Axios.get(`${URL_COUNTRY}${alpha3code}`)
-        .then(response => {
-            dispatch({
-                type: GET_COUNTRY_DETAIL,
-                payload: response.data
+            .then(response => {
+                dispatch(getCountryDetailSuccess(response.data))
             })
-        })
-                // .catch(error => {
+        // .catch(error => {
 
         // })
     }
 }
+
+export const clearCountryDetail = () => {
+    return {
+        type: CLEAR_COUNTRY_DETAIL
+    }
+};
 
 export const searchCountriesRequest = () => {
     return {
@@ -71,21 +95,20 @@ export const searchCountriesFailure = (error) => {
 export const searchCountries = (name) => {
     return (dispatch) => {
         dispatch(searchCountriesRequest())
-        // Axios.get(`${URL}/${page}`)
         Axios.get(`${URL_COUNTRIES_SEARCH_COUNTRY}${name}`)
-        .then(response => {
-            dispatch(searchCountriesSuccess(response.data))
-        })
-        .catch(error => {
-            dispatch(searchCountriesFailure(error))
-        })
+            .then(response => {
+                dispatch(searchCountriesSuccess(response.data))
+            })
+            .catch(error => {
+                dispatch(searchCountriesFailure(error))
+            })
     }
 };
 
 export const getActivities = (name) => {
     return {
         type: GET_ACTIVITIES,
-        payload: {name}
+        payload: { name }
     }
 };
 
@@ -102,3 +125,33 @@ export const removeCountryFav = (alpha3code) => {
         payload: alpha3code
     }
 };
+
+export const filterRegion = (region, page) => {
+    return (dispatch) => {
+        Axios.get(`${URL_FILTER_REGION}/${region}/${page}`)
+            .then(response => {
+                dispatch({
+                    type: FILTER_REGION,
+                    payload: response.data
+                })
+            })
+        // .catch(error => {
+
+        // })
+    }
+};
+
+export const orderCountries = (order) => {
+    return (dispatch) => {
+        Axios.get(`${URL_ORDER}/${order}`)
+        .then(response => {
+            dispatch({
+                type: ORDER_COUNTRIES,
+                payload: response.data
+            })
+        })
+                // .catch(error => {
+
+        // })
+    }
+}

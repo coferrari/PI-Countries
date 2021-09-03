@@ -51,12 +51,10 @@ router.get('/order/:season', async (req, res) => {
 });
 
 router.post('/', async function(req, res) {
-    // Modificar para que cuando se clickee el botón de "SUBMIT" se cree un nuevo post
-    // tomando los datos desde el form y agregándolo a la base de datos
-    // (Debe incluir también la categoría a la/s cual/es pertenece)
-    // Tu código acá:
-    const { name, difficulty, duration, season, countryName } = req.body;
-    if (name && difficulty && duration && season && countryName) {
+    let { name, difficulty, duration, season, countryCode } = req.body;
+    name = name.slice(0, 1).toUpperCase() + name.slice(1).toLowerCase();
+
+    if (name && difficulty && duration && season && countryCode) {
         try {
             const activity = await Activity.findOrCreate({
               where: {
@@ -66,52 +64,29 @@ router.post('/', async function(req, res) {
                 season: season
               },
             });
-        
-            const country = await Country.findOne({
-                where: {
-                    name: countryName
-                }
-            })
-          
-            // await user[0].addPage(page);
-            await activity[0].addCountry(country);
-            // await page.addCategories(categories);
-            // res.redirect(page.route);
-            res.send(activity)
+
+            if (countryCode.length === 1) {
+                const country = await Country.findOne({
+                    where: {
+                        alpha3Code: countryCode[0]
+                    }
+                })
+                await activity[0].addCountry(country); // [0] pq findOrCreate devuelve un arreglo con 2 elementos
+                // await page.addCategories(categories);
+                // res.redirect(page.route);
+                res.send(country)
+            }
+            if (countryCode.length > 1) {
+                await activity[0].addCountries(countryCode);
+                res.send(countryCode)
+            }
         } catch (error) {
             res.send(error)
         }
     } else {
         res.send('Missing parameters')
     }
-  
 });
-
-// post que funciona
-// router.post('/', async (req, res) => {
-//     const { name, difficulty, duration, season, countryName } = req.body;
-//     if (name && difficulty && duration && season && countryName) {
-//         try {
-//             const country = await Country.findOne({
-//                 where: {
-//                     name: countryName
-//                 }
-//             })
-//             const newActivity = await Activity.create({
-//                 name,
-//                 difficulty,
-//                 duration,
-//                 season
-//             });
-//             res.json(await country.addActivity(newActivity.id))
-    
-//         } catch (error) {
-//             res.send(error);
-//         }
-//     } else {
-//         res.send('Missing parameters')
-//     }
-// });
 
 
 module.exports = router;

@@ -8,64 +8,92 @@ const router = Router();
 
 router.get('/', async (req, res, next) => {
     try {
-        const countries = await Country.findAll();
+        const countries = await Country.findAndCountAll({
+            order: [
+                ['name', 'ASC']
+            ]
+        });
         res.json(countries);
     } catch (error) {
         res.send(error);
     }
 });
-
-// el bulk create me reemplaza esto
 // router.get('/', async (req, res, next) => {
 //     try {
-//         const countriesDB = await Country.findAll();
-//         if (countriesDB.length === 0) {
-//             const countries = await axios.get('https://restcountries.eu/rest/v2/all')
-//             if (countries.data) {
-//                 for (let i = 0; i < countries.data.length; i++) {
-//                     await Country.create({
-//                         alpha3Code: countries.data[i].alpha3Code,
-//                         name: countries.data[i].name,
-//                         flag: countries.data[i].flag,
-//                         capital: countries.data[i].capital,
-//                         region: countries.data[i].region,
-//                         subregion: countries.data[i].subregion,
-//                         area: countries.data[i].area,
-//                         population: countries.data[i].population
-//                     })
-//                 }
-//             }
-//             const allCountries = await Country.findAll();
-//             res.status(200).json(allCountries)
-//         } else {
-//             res.status(200).json(countriesDB)
-//         }
+//         const countries = await Country.findAll({
+//             order: [
+//                 ['name', 'ASC']
+//             ]
+//         });
+//         res.json(countries);
 //     } catch (error) {
-//         res.status(404).json({ error: error })
+//         res.send(error);
 //     }
 // });
 
 // faltan hacer validaciones y calcular cantidad total de paginas, seguir viendo tutorial
-// que en la primer pagina muestre 9 y en el resto 10 -- OK
 // son 25 paginas, calcular con el findAndCountAll()
 // arreglar si pongo 1a entra a page 1
 // si pongo e1 queda trabado
+// router.get('/:page', async (req, res) => {
+//     const { page } = req.params;
+//     const pageNumber = parseInt(page); 
+//     try {
+//         if (pageNumber === 1) {
+//             const size = 9;
+//             const countries = await Country.findAndCountAll({
+//                 include: Activity,
+//                 limit: size,
+//                 order: [
+//                     ['name', 'ASC']
+//                 ]
+//             });
+//             res.json(countries);
+//         }
+//         if (pageNumber > 1 && pageNumber <= 26) {
+//             const size = 10;
+//             const countries = await Country.findAndCountAll({
+//                 include: Activity,
+//                 limit: size,
+//                 offset: (pageNumber * size) - size - 1,
+//                 order: [
+//                     ['name', 'ASC']
+//                 ]
+//             });
+//             res.json(countries);
+//         }
+//         if (pageNumber >= 25 || typeof pageNumber !== 'number') {
+//             res.json('Not found')
+//         }
+//     } catch (error) {
+//         res.send(error);
+//     }
+// });
+
 router.get('/:page', async (req, res) => {
     const { page } = req.params;
-    const pageNumber = parseInt(page); 
+    const pageNumber = parseInt(page);
     try {
         if (pageNumber === 1) {
             const size = 9;
-            const countries = await Country.findAll({
-                limit: size
+            const countries = await Country.findAndCountAll({
+                include: Activity,
+                limit: size,
+                order: [
+                    ['name', 'ASC']
+                ]
             });
             res.json(countries);
         }
         if (pageNumber > 1 && pageNumber <= 26) {
             const size = 10;
-            const countries = await Country.findAll({
+            const countries = await Country.findAndCountAll({
+                include: Activity,
                 limit: size,
-                offset: (pageNumber * size) - size - 1
+                offset: (pageNumber * size) - size - 1,
+                order: [
+                    ['name', 'ASC']
+                ]
             });
             res.json(countries);
         }
@@ -76,16 +104,54 @@ router.get('/:page', async (req, res) => {
         res.send(error);
     }
 });
+// router.get('/:page', async (req, res) => {
+//     const { page } = req.params;
+//     const pageNumber = parseInt(page);
+//     try {
+//         if (pageNumber === 1) {
+//             const size = 9;
+//             const countries = await Country.findAll({
+//                 include: Activity,
+//                 limit: size,
+//                 order: [
+//                     ['name', 'ASC']
+//                 ]
+//             });
+//             res.json(countries);
+//         }
+//         if (pageNumber > 1 && pageNumber <= 26) {
+//             const size = 10;
+//             const countries = await Country.findAll({
+//                 include: Activity,
+//                 limit: size,
+//                 offset: (pageNumber * size) - size - 1,
+//                 order: [
+//                     ['name', 'ASC']
+//                 ]
+//             });
+//             res.json(countries);
+//         }
+//         if (pageNumber >= 25 || typeof pageNumber !== 'number') {
+//             res.json('Not found')
+//         }
+//     } catch (error) {
+//         res.send(error);
+//     }
+// });
 
+// agregar que incluya la actividad
 router.get('/search/country', async (req, res) => {
     const { name } = req.query;
     try {
-        const country = await Country.findAll({
+        const country = await Country.findAndCountAll({
             where: {
                 name: {
                     [Op.iLike]: `%${name}%`
                 }
-            }
+            }, 
+            order: [
+                ['name', 'ASC']
+            ]
         })
         if (country.length === 0) {
             res.send('Country not found')
@@ -95,39 +161,67 @@ router.get('/search/country', async (req, res) => {
         res.send(error);
     }
 });
+// router.get('/search/country', async (req, res) => {
+//     const { name } = req.query;
+//     try {
+//         const country = await Country.findAll({
+//             where: {
+//                 name: {
+//                     [Op.iLike]: `%${name}%`
+//                 }
+//             }
+//         })
+//         if (country.length === 0) {
+//             res.send('Country not found')
+//         }
+//         res.json(country)
+//     } catch (error) {
+//         res.send(error);
+//     }
+// });
 
-router.get('/order/:order', async (req, res) => {
-    const { order } = req.params;
+router.get('/order/:order/:page', async (req, res) => {
+    const { order, page } = req.params;
+    const pageNumber = parseInt(page);
+    const size = 10;
     try {
-        if (order === 'Z-A') {
-            const countries = await Country.findAll({
-                order: [
-                    ['name', 'DESC']
-                ]
-            })
-            res.json(countries || 'Country not found')
-        }
-        if (order === 'A-Z') {
-            const countries = await Country.findAll({
+        if (order === 'AtoZ') {
+            const countries = await Country.findAndCountAll({
                 order: [
                     ['name', 'ASC']
-                ]
+                ],
+                limit: size,
+                offset: (pageNumber * size),
             })
             res.json(countries || 'Country not found')
         }
-        if (order === 'popdown') {
-            const countries = await Country.findAll({
+        if (order === 'ZtoA') {
+            const countries = await Country.findAndCountAll({
                 order: [
-                    ['population', 'DESC']
-                ]
+                    ['name', 'DESC']
+                ],
+                limit: size,
+                offset: (pageNumber * size),
+            })
+            res.json(countries || 'Country not found')
+        }
+        if (order === 'PopulationUp') {
+            const countries = await Country.findAndCountAll({
+                order: [
+                    ['population', 'ASC']
+                ],
+                limit: size,
+                offset: (pageNumber * size),
             })
             res.json(countries || 'Not found')
         }
-        if (order === 'popup') {
-            const countries = await Country.findAll({
+        if (order === 'PopulationDown') {
+            const countries = await Country.findAndCountAll({
                 order: [
-                    ['population', 'ASC']
-                ]
+                    ['population', 'DESC']
+                ],
+                limit: size,
+                offset: (pageNumber * size),
             })
             res.json(countries || 'Not found')
         }
@@ -135,17 +229,63 @@ router.get('/order/:order', async (req, res) => {
         res.send(error)
     }
 });
+// router.get('/order/:order', async (req, res) => {
+//     const { order } = req.params;
+//     try {
+//         if (order === 'AtoZ') {
+//             const countries = await Country.findAll({
+//                 order: [
+//                     ['name', 'ASC']
+//                 ]
+//             })
+//             res.json(countries || 'Country not found')
+//         }
+//         if (order === 'ZtoA') {
+//             const countries = await Country.findAll({
+//                 order: [
+//                     ['name', 'DESC']
+//                 ]
+//             })
+//             res.json(countries || 'Country not found')
+//         }
+//         if (order === 'PopulationUp') {
+//             const countries = await Country.findAll({
+//                 order: [
+//                     ['population', 'ASC']
+//                 ]
+//             })
+//             res.json(countries || 'Not found')
+//         }
+//         if (order === 'PopulationDown') {
+//             const countries = await Country.findAll({
+//                 order: [
+//                     ['population', 'DESC']
+//                 ]
+//             })
+//             res.json(countries || 'Not found')
+//         }
+//     } catch (error) {
+//         res.send(error)
+//     }
+// });
 // ver de hacerlo dinamico en el otro get de order
-router.get('/region/:region', async (req, res) => {
-    let { region } = req.params;
+router.get('/region/:region/:page', async (req, res) => {
+    let { region, page } = req.params;
+    const pageNumber = parseInt(page);
+    const size = 10;
     region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase())
     try {
-        const countriesByRegion = await Country.findAll({
+        const countriesByRegion = await Country.findAndCountAll({
             where: {
                 region: region
-            }
+            },
+            limit: size,
+            offset: (pageNumber * size),
+            order: [
+                ['name', 'ASC']
+            ]
         })
-        if (!countriesByRegion.length) {
+        if (!countriesByRegion.count) {
             res.send('Region not found')
         }
         res.send(countriesByRegion)
@@ -153,5 +293,22 @@ router.get('/region/:region', async (req, res) => {
         res.send(error)
     }
 });
+// router.get('/region/:region', async (req, res) => {
+//     let { region } = req.params;
+//     region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase())
+//     try {
+//         const countriesByRegion = await Country.findAll({
+//             where: {
+//                 region: region
+//             }
+//         })
+//         if (!countriesByRegion.length) {
+//             res.send('Region not found')
+//         }
+//         res.send(countriesByRegion)
+//     } catch (error) {
+//         res.send(error)
+//     }
+// });
 
 module.exports = router;

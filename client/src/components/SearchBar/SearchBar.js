@@ -9,8 +9,6 @@ const SearchBar = () => {
     const [country, setCountry] = useState('');
     return (
         <>
-            SEARCH BAR
-            <label>Search:</label>
             <input
                 type='text'
                 value={country}
@@ -22,6 +20,7 @@ const SearchBar = () => {
             <button
                 onClick={() => {
                     dispatch(searchCountries(country))
+                    // setCountry('')
                 }}
             >
                 Search
