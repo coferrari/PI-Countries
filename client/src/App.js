@@ -13,8 +13,8 @@ function App() {
   return (
     <div className="App App-header">
       <BrowserRouter>
-        <Switch>
-          <Route path='/home'>
+        {/* <Switch> */}
+          <Route path='/home/countries'>
             <NavBar />
             <ButtonBar />
             <Home />
@@ -25,12 +25,14 @@ function App() {
             <CountryDetails />
           </Route>
           <Route exact path='/order/:order'>
+          <ButtonBar />
             <Countries />
+            <Pagination />
           </Route>
           <Route exact path="/">
             <LandingPage />
           </Route>
-        </Switch>
+        {/* </Switch> */}
       </BrowserRouter>
     </div>
   );

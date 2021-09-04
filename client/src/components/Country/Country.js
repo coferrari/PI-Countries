@@ -9,7 +9,7 @@ const Country = ({ alpha3Code, name, flag, region}) => {
             <li>
                 <Link to={`/country/${alpha3Code}`}>{name}</Link>
             </li>
-            <img src={flag} alt={`Flag ${name}`} height='200px' />
+            <img src={flag} alt={`Flag ${name}`} height='100px' />
             <p>{region}</p>
         </div>
     )

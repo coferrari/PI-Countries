@@ -7,7 +7,7 @@ const LandingPage = () => {
     return (
         <>
             <br />
-            <Link to='/home'>
+            <Link to='/home/countries'>
                 <img src={Logo} width="300" height="300" alt='img not found' />
                 <button>Entrar</button>
             </Link>

@@ -12,7 +12,7 @@ const Home = () => {
 
     useEffect(() => {
         if (!countries.length) {
-            dispatch(getCountries(page = page))
+            dispatch(getCountries('countries', page = page))
         }
     }, []); // [ ]para que solo corra cuando se monta el componente y no se genere un loop infinito de llamados
 

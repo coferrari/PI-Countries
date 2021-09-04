@@ -21,13 +21,12 @@ import {
 
 } from './types';
 
-export const getCountries = (page) => {
+export const getCountries = (path, page) => {
     return (dispatch) => {
-        Axios.get(`${URL_COUNTRIES}/${page}`)
+        Axios.get(`${URL_COUNTRIES}/${path}/${page}`)
             .then(response => {
                 dispatch({
                     type: GET_COUNTRIES,
-                    // payload: response.data.rows
                     payload: response.data
                 })
             })
@@ -141,9 +140,9 @@ export const filterRegion = (region, page) => {
     }
 };
 
-export const orderCountries = (order) => {
+export const orderCountries = (order, page) => {
     return (dispatch) => {
-        Axios.get(`${URL_ORDER}/${order}`)
+        Axios.get(`${URL_ORDER}/${order}/${page}`)
         .then(response => {
             dispatch({
                 type: ORDER_COUNTRIES,
