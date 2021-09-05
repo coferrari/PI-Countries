@@ -33,7 +33,15 @@ const CountryDetails = () => {
                     {state.countryDetails.region && <li>{state.countryDetails.region}</li>}
                     {state.countryDetails.area && <li>{state.countryDetails.area / 1000}</li>}
                     {state.countryDetails.population && <li>{state.countryDetails.population}</li>}
-                    {state.countryDetails.activities && <li>{state.countryDetails.activities}</li>}
+                    {state.countryDetails.Activities && state.countryDetails.Activities.map(activity => (
+                        <div>
+
+                        <li>{activity.name}</li>
+                        <li>{activity.duration}</li>
+                        <li>{activity.season}</li>
+                        <li>{activity.difficulty}</li>
+                        </div>
+                    ))}
                 </ul>
             </div>}
             <button onClick={() => history.goBack()}>Go back</button>

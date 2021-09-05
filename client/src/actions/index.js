@@ -8,6 +8,7 @@ import {
     SEARCH_COUNTRIES_SUCCESS,
     SEARCH_COUNTRIES_FAILURE,
     GET_ACTIVITIES,
+    POST_ACTIVITY,
     ADD_COUNTRY_FAV,
     REMOVE_COUNTRY_FAV,
     FILTER_REGION,
@@ -17,7 +18,8 @@ import {
     URL_COUNTRIES_SEARCH_COUNTRY,
     URL_COUNTRY,
     URL_FILTER_REGION,
-    URL_ORDER
+    URL_ORDER,
+    URL_POST_ACTIVITY
 
 } from './types';
 
@@ -34,7 +36,20 @@ export const getCountries = (path, page) => {
 
         // })
     }
+};
+export const getAllCountries = () => {
+    return (dispatch) => {
+        Axios.get(`${URL_COUNTRIES}/countries`)
+            .then(response => {
+                dispatch({
+                    type: GET_COUNTRIES,
+                    payload: response.data
+                })
+            })
+        // .catch(error => {
 
+        // })
+    }
 };
 
 export const getCountryDetailRequest = () => {
@@ -152,5 +167,16 @@ export const orderCountries = (order, page) => {
                 // .catch(error => {
 
         // })
+    }
+}
+
+export const postActivities = (payload) => {
+    return (dispatch) => {
+        const response = Axios.post(`${URL_POST_ACTIVITY}`, payload)
+        dispatch({
+            type: POST_ACTIVITY
+        })
+        console.log(response)
+        return response;
     }
 }

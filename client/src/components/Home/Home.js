@@ -1,14 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCountries } from '../../actions'
 import Countries from '../Countries/Countries';
 
 const Home = () => {
 
+    
     const countries = useSelector(state => state.countries)
+    const dispatch = useDispatch();
+    
+    
+    // SELENE
+    // const [currentPage, setCurrentPage] = useState(1); //me guardo en un estado local la pagina actual
+    // const [countriesPerPage, setCountriesPerPage] = useState(10);
+    // const indexOfLastCountry = currentPage * countriesPerPage;
+    // const indexOfFirtsCountry = indexOfLastCountry - countriesPerPage;
+    // const currentCharacters = countries.slice(indexOfFirtsCountry, indexOfLastCountry);
+
+    // const paginado = (pageNumber) => {
+    //     setCurrentPage(pageNumber)
+    // }
 
     let page = 1
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!countries.length) {
