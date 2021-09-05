@@ -3,16 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { getAllCountries, postActivities } from "../../actions/index";
 
-function validate(input) {
-  let errors = {};
-  if (!input.name) errors.name = "* Name required";
-  if (!input.difficulty) errors.difficulty = '1 to 5'
-  if (!input.duration) input.duration = '30 to 180';
-  if (!input.season) errors.season = "Select a season";
-  if (!input.countryCode) errors.countryCode = 'Select at least one country'
-  return errors;
-}
-
 const ActivityCreate = () => {
   const countries = useSelector((state) => state.countries);
   const dispatch = useDispatch();
@@ -25,9 +15,14 @@ const ActivityCreate = () => {
     season: "",
     countryCode: [],
   });
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState({
+    name: "Name required",
+    difficulty: "Select from 1 to 5",
+    duration: "Select above 0",
+    season: "Select a season",
+    countryCode: "Select at least one Country",
+  });
 
-  // useEffect para que me traiga todos los paises y los pueda renderizar en el select cuando se monta el componente
   useEffect(() => {
     if (countries) {
       dispatch(getAllCountries());
@@ -39,12 +34,12 @@ const ActivityCreate = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
-    setErrors(
-      validate({
-        ...errors,
-        [e.target.name]: e.target.value,
-      })
-    );
+    if (e.target.value) {
+      setError({
+        ...error,
+        name: "",
+      });
+    }
   }
 
   function handleRadio(e) {
@@ -52,12 +47,12 @@ const ActivityCreate = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
-    // setErrors(
-    //   validate({
-    //     ...errors,
-    //     [e.target.name]: e.target.value
-    //   })
-    // )
+    if (e.target.value) {
+      setError({
+        ...error,
+        season: "",
+      });
+    }
   }
 
   function handleRange(e) {
@@ -65,12 +60,12 @@ const ActivityCreate = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
-    // setErrors(
-    //   validate({
-    //     ...errors,
-    //     [e.target.name]: e.target.value,
-    //   })
-    // );
+    if (e.target.value) {
+      setError({
+        ...error,
+        difficulty: "",
+      });
+    }
   }
 
   function handleRangeDuration(e) {
@@ -78,12 +73,12 @@ const ActivityCreate = () => {
       ...input,
       [e.target.name]: e.target.value,
     });
-    // setErrors(
-    //   validate({
-    //     ...errors,
-    //     [e.target.name]: e.target.value,
-    //   })
-    // );
+    if (e.target.value) {
+      setError({
+        ...error,
+        duration: "",
+      });
+    }
   }
 
   function handleSelect(e) {
@@ -98,12 +93,12 @@ const ActivityCreate = () => {
           return acc;
         }, []),
     });
-    // setErrors(
-    //   validate({
-    //     ...errors,
-    //     [e.target.name]: e.target.value,
-    //   })
-    // );
+    if (!input.countryCode.length) {
+      setError({
+        ...error,
+        countryCode: "",
+      });
+    }
   }
 
   function handleSubmit(e) {
@@ -129,7 +124,6 @@ const ActivityCreate = () => {
 
   return (
     <>
-      ACTIVIDADES
       <Link to="/home">
         <button>Back to Countries</button>
       </Link>
@@ -144,7 +138,7 @@ const ActivityCreate = () => {
             placeholder="Activity"
             onChange={(e) => handleChange(e)}
           ></input>
-          {errors.name && <p>{errors.name}</p>}
+          {error.name ? <p>{error.name}</p> : null}
         </div>
         <div>
           {seasons.map((season) => (
@@ -158,19 +152,21 @@ const ActivityCreate = () => {
               ></input>
             </div>
           ))}
+          {error.season ? <p>{error.season}</p> : null}
         </div>
         <div>
           difficulty
           <label htmlFor={input.value}></label>
           <input
             type="range"
-            min="1"
+            min="0"
             max="5"
             step="1"
             name="difficulty"
-            defaultValue="1"
+            defaultValue="0"
             onInput={(e) => handleRange(e)}
           ></input>
+          {error.difficulty ? <p>{error.difficulty}</p> : null}
           <p>{input.difficulty}</p>
         </div>
         <div>
@@ -178,14 +174,15 @@ const ActivityCreate = () => {
           <label htmlFor={input.value}></label>
           <input
             type="range"
-            min="30"
+            min="0"
             max="180"
             step="15"
             name="duration"
-            defaultValue="30"
+            defaultValue="0"
             onInput={(e) => handleRangeDuration(e)}
           ></input>
           <p>{input.duration}</p>
+          {error.duration ? <p>{error.duration}</p> : null}
         </div>
         <select onChange={(e) => handleSelect(e)}>
           <option>Select a country</option>
@@ -195,10 +192,6 @@ const ActivityCreate = () => {
             </option>
           ))}
         </select>
-
-        <br />
-        <br />
-
         <ul>
           {input.countryCode?.map((country) => (
             <div key={country}>
@@ -206,6 +199,7 @@ const ActivityCreate = () => {
               <button onClick={() => handleRemove(country)}>X</button>
             </div>
           ))}
+          {error.countryCode ? <p>{error.countryCode}</p> : null}
         </ul>
         {input.name &&
           input.difficulty !== 0 &&
