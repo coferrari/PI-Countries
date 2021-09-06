@@ -140,6 +140,21 @@ export const removeCountryFav = (alpha3code) => {
     }
 };
 
+// export const filterRegion = (region) => {
+//     return (dispatch) => {
+//         Axios.get(`${URL_COUNTRIES}/countries`)
+//             .then(response => {
+//                 dispatch({
+//                     type: GET_COUNTRIES,
+//                     payload: response.data
+//                 })
+//             })
+//         // .catch(error => {
+
+//         // })
+//     }
+// }
+//ANTERIOR
 export const filterRegion = (region, page) => {
     return (dispatch) => {
         Axios.get(`${URL_FILTER_REGION}/${region}/${page}`)

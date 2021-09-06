@@ -28,6 +28,7 @@ const SearchBar = () => {
       ></input>
       <button
         type="submit"
+        disabled={!country}
         onClick={(e) => {
           handleClick(e);
         }}

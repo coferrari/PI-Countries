@@ -84,6 +84,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
           (country) => country.alpha3code !== payload
         ),
       };
+    // case FILTER_REGION:
+    //   const allCountries = state.countries
+    //   const statusFiltered = payload === 'All'
+    //   return {
+    //     ...state,
+    //     countries: payload
+    //   };
+      // VIEJA
     case FILTER_REGION:
       return {
         ...state,

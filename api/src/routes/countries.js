@@ -3,9 +3,6 @@ const { Country, Activity, Op } = require("../db");
 
 const router = Router();
 
-// aca entiendo que deberian llegar en la landing page, cuando pones ingresar
-
-
 router.get('/', async (req, res, next) => {
     try {
         const countries = await Country.findAndCountAll({
@@ -143,12 +140,14 @@ router.get('/:page', async (req, res) => {
 router.get('/search/country', async (req, res) => {
     const { name } = req.query;
     try {
+        const size = 10
         const country = await Country.findAndCountAll({
             where: {
                 name: {
                     [Op.iLike]: `%${name}%`
                 }
             }, 
+            limit: size,
             order: [
                 ['name', 'ASC']
             ]

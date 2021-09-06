@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 
 const NavBar = () => {
-    return (
-        <>
-        Countries app
-        <br/><br/>
-        </>
-    );
-}
- 
+  return (
+    <>
+      Countries app
+      <br />
+      <br />
+    </>
+  );
+};
+
 export default NavBar;

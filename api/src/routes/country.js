@@ -14,7 +14,7 @@ router.get('/:idPais', async (req, res) => {
                     through: {
                         attributes: []
                     }
-                }],
+                }]
             })
             res.json(country || 'Country not found')
         } catch (error) {

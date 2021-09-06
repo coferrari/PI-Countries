@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom'
-import { clearCountryDetail, getCountryDetail } from '../../actions'
+import { clearCountryDetail, getCountries, getCountryDetail } from '../../actions'
 
 const CountryDetails = () => {
     const { alpha3code } = useParams();
@@ -17,7 +17,6 @@ const CountryDetails = () => {
         }
     }, []);
 
-    // falta map de activities
     // loading no seria necesario con el useEffect, ver de sacar
     // validar solo en los que los datos puedan ser NULL, EL RESTO CREO QUE ES INNNECESARIO
 
