@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Country from "../Country/Country";
-import { useLocation } from "react-router-dom";
-import { filterRegion, getCountries, orderCountries } from "../../actions/";
 
-const Countries = () => {
+const Countries = ({currentCountries}) => {
   const state = useSelector(state => state);
-
+  
   // ver tema de error, sino sacar del estado
   return (
     <>
@@ -21,6 +19,15 @@ const Countries = () => {
             key={country.alpha3Code}
           />
         ))}
+      {currentCountries?.map((country) => (
+        <Country
+            name={country.name}
+            flag={country.flag}
+            region={country.region}
+            alpha3Code={country.alpha3Code}
+            key={country.alpha3Code}
+          />
+      ))}
       {state.error && <span>{state.error}</span>}
     </>
   );

@@ -24,33 +24,33 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/order/:season", async (req, res) => {
-  let { season } = req.params;
-  season = season.toLowerCase();
-  "summer", "fall", "winter", "spring";
-  if (
-    season === "summer" ||
-    season === "fall" ||
-    season === "winter" ||
-    season === "spring"
-  ) {
-    try {
-      const activitiesByRegion = await Activity.findAll({
-        where: {
-          season: season,
-        },
-      });
-      if (!activitiesByRegion.length) {
-        res.send(`No activities found in ${season}`);
-      }
-      res.send(activitiesByRegion);
-    } catch (error) {
-      res.send(error);
-    }
-  } else {
-    res.send("Invalid season");
-  }
-});
+// router.get("/order/:season", async (req, res) => {
+//   let { season } = req.params;
+//   season = season.toLowerCase();
+//   "summer", "fall", "winter", "spring";
+//   if (
+//     season === "summer" ||
+//     season === "fall" ||
+//     season === "winter" ||
+//     season === "spring"
+//   ) {
+//     try {
+//       const activitiesByRegion = await Activity.findAll({
+//         where: {
+//           season: season,
+//         },
+//       });
+//       if (!activitiesByRegion.length) {
+//         res.send(`No activities found in ${season}`);
+//       }
+//       res.send(activitiesByRegion);
+//     } catch (error) {
+//       res.send(error);
+//     }
+//   } else {
+//     res.send("Invalid season");
+//   }
+// });
 
 router.post("/", async function (req, res) {
   let { name, difficulty, duration, season, countryCode } = req.body;

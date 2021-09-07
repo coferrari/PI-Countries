@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom'
-import { clearCountryDetail, getCountries, getCountryDetail } from '../../actions'
+import { useParams, useHistory } from 'react-router-dom';
+import { clearCountryDetail, getCountryDetail } from '../../actions';
 
 const CountryDetails = () => {
     const { alpha3code } = useParams();
@@ -16,6 +16,10 @@ const CountryDetails = () => {
             dispatch(clearCountryDetail())
         }
     }, []);
+
+    function handleClick() {
+        history.goBack();
+    }
 
     // loading no seria necesario con el useEffect, ver de sacar
     // validar solo en los que los datos puedan ser NULL, EL RESTO CREO QUE ES INNNECESARIO
@@ -43,7 +47,7 @@ const CountryDetails = () => {
                     ))}
                 </ul>
             </div>}
-            <button onClick={() => history.goBack()}>Go back</button>
+            <button onClick={() => handleClick()}>Back to countries</button>
         </>
     );
 }

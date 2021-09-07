@@ -12,6 +12,7 @@ import {
     ADD_COUNTRY_FAV,
     REMOVE_COUNTRY_FAV,
     FILTER_REGION,
+    FILTER_ACTIVITIES,
     ORDER_COUNTRIES,
 
     URL_COUNTRIES,
@@ -19,9 +20,11 @@ import {
     URL_COUNTRY,
     URL_FILTER_REGION,
     URL_ORDER,
-    URL_POST_ACTIVITY
+    URL_POST_ACTIVITY,
+    URL_GET_ACTIVITIES
 
 } from './types';
+
 
 export const getCountries = (path, page) => {
     return (dispatch) => {
@@ -37,6 +40,7 @@ export const getCountries = (path, page) => {
         // })
     }
 };
+//
 export const getAllCountries = () => {
     return (dispatch) => {
         Axios.get(`${URL_COUNTRIES}/countries`)
@@ -119,13 +123,6 @@ export const searchCountries = (name) => {
     }
 };
 
-export const getActivities = (name) => {
-    return {
-        type: GET_ACTIVITIES,
-        payload: { name }
-    }
-};
-
 export const addCountryFav = (alpha3code) => {
     return {
         type: ADD_COUNTRY_FAV,
@@ -140,21 +137,6 @@ export const removeCountryFav = (alpha3code) => {
     }
 };
 
-// export const filterRegion = (region) => {
-//     return (dispatch) => {
-//         Axios.get(`${URL_COUNTRIES}/countries`)
-//             .then(response => {
-//                 dispatch({
-//                     type: GET_COUNTRIES,
-//                     payload: response.data
-//                 })
-//             })
-//         // .catch(error => {
-
-//         // })
-//     }
-// }
-//ANTERIOR
 export const filterRegion = (region, page) => {
     return (dispatch) => {
         Axios.get(`${URL_FILTER_REGION}/${region}/${page}`)
@@ -173,17 +155,40 @@ export const filterRegion = (region, page) => {
 export const orderCountries = (order, page) => {
     return (dispatch) => {
         Axios.get(`${URL_ORDER}/${order}/${page}`)
-        .then(response => {
-            dispatch({
-                type: ORDER_COUNTRIES,
-                payload: response.data
+            .then(response => {
+                dispatch({
+                    type: ORDER_COUNTRIES,
+                    payload: response.data
+                })
             })
-        })
-                // .catch(error => {
+        // .catch(error => {
 
         // })
     }
-}
+};
+
+export const getActivities = () => {
+    return (dispatch) => {
+        Axios.get(`${URL_GET_ACTIVITIES}`)
+            .then(response => {
+                dispatch({
+                    type: GET_ACTIVITIES,
+                    payload: response.data
+                })
+            })
+        // .catch(error => {
+
+        // })
+    }
+};
+
+export const filterActivities = (payload) => {
+    console.log(payload, 'payload')
+    return {
+        type: FILTER_ACTIVITIES,
+        payload: payload
+    }
+};
 
 export const postActivities = (payload) => {
     return (dispatch) => {
@@ -194,4 +199,4 @@ export const postActivities = (payload) => {
         console.log(response)
         return response;
     }
-}
+};

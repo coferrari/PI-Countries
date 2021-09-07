@@ -27,10 +27,6 @@ function App() {
         <Route exact path="/activities">
           <ActivityCreate />
         </Route>
-        <Route exact path="/order/:order">
-          {/* <ButtonBar /> */}
-          <Countries />
-        </Route>
         {/* </Switch> */}
       </BrowserRouter>
     </div>

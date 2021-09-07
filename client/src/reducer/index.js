@@ -10,6 +10,7 @@ import {
   ADD_COUNTRY_FAV,
   REMOVE_COUNTRY_FAV,
   FILTER_REGION,
+  FILTER_ACTIVITIES,
   ORDER_COUNTRIES,
   POST_ACTIVITY,
 } from "../actions/types";
@@ -22,10 +23,11 @@ const initialState = {
   countriesFav: [],
   countryDetails: {},
   detailsLoading: false,
-//   activities = []
+  activities: [],
+  allActivities: [],
+  countriesMatch: [],
+  countCountriesMatch: 0,
 };
-
-// para ordenar desde el front, deberia hacer la logica aca // ej .sort() // ojo que si o si devuelva un arreglo nuevo y no modifique el anterior
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -34,6 +36,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         countries: payload.rows,
         countCountries: payload.count,
+        countriesMatch: [],
+        countCountriesMatch: 0,
       };
     case GET_COUNTRY_DETAIL_REQUEST:
       return {
@@ -59,9 +63,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case SEARCH_COUNTRIES_SUCCESS:
       return {
         ...state,
+        countries: [],
+        countCountries: 0,
         loading: false,
-        countries: payload.rows,
-        countCountries: payload.count,
+        countriesMatch: payload.rows,
+        countCountriesMatch: payload.count,
         error: "",
       };
     case SEARCH_COUNTRIES_FAILURE:
@@ -84,25 +90,39 @@ const rootReducer = (state = initialState, { type, payload }) => {
           (country) => country.alpha3code !== payload
         ),
       };
-    // case FILTER_REGION:
-    //   const allCountries = state.countries
-    //   const statusFiltered = payload === 'All'
-    //   return {
-    //     ...state,
-    //     countries: payload
-    //   };
-      // VIEJA
     case FILTER_REGION:
       return {
         ...state,
         countries: payload.rows,
         countCountries: payload.count,
+        countriesMatch: [],
+        countCountriesMatch: 0,
       };
     case ORDER_COUNTRIES:
       return {
         ...state,
         countries: payload.rows,
         countCountries: payload.count,
+        countriesMatch: [],
+        countCountriesMatch: 0,
+      };
+    case GET_ACTIVITIES:
+      return {
+        ...state,
+        activities: payload,
+        allActivities: payload,
+      };
+    case FILTER_ACTIVITIES:
+      const allActivities = state.allActivities;
+      const activitiesFiltered =
+        payload === "All Activities"
+          ? allActivities
+          : allActivities.filter((activity) => activity.season === payload);
+      return {
+        ...state,
+        activities: activitiesFiltered,
+        countriesMatch: [],
+        countCountriesMatch: 0,
       };
     case POST_ACTIVITY:
       return {
