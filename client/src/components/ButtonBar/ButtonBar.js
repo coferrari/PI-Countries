@@ -18,7 +18,7 @@ const ButtonBar = () => {
   const activities = ["All Activities", "Summer", "Fall", "Winter", "Spring"];
   const totalCountries = countries.countCountries;
   const totalPages = [];
-  for (let i = 1; i < Math.round(totalCountries / 9.5) + 1; i++) {
+  for (let i = 1; i < Math.ceil(totalCountries / 9.75) + 1; i++) {
     totalPages.push(i);
   };
 

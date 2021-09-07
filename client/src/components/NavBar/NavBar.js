@@ -1,11 +1,14 @@
 import React from "react";
+import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
   return (
     <>
-      Countries app
-      <br />
-      <br />
+      // LOGO
+      <NavLink to="/home/activities">
+      </NavLink>
+
+      // GO TO ACTIVITIES
     </>
   );
 };

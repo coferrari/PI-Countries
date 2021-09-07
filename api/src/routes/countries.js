@@ -61,7 +61,6 @@ router.get('/search/country', async (req, res) => {
                     [Op.iLike]: `%${name}%`
                 }
             },
-            // limit: size,
             order: [
                 ['name', 'ASC']
             ]
@@ -122,7 +121,7 @@ router.get('/order/:order/:page', async (req, res) => {
                 res.json(countries || 'Not found')
             }
         }
-        if (pageNumber > 0) {
+        if (pageNumber >= 1) {
             const size = 10;
             if (order === 'AtoZ') {
                 const countries = await Country.findAndCountAll({
@@ -130,7 +129,7 @@ router.get('/order/:order/:page', async (req, res) => {
                         ['name', 'ASC']
                     ],
                     limit: size,
-                    offset: (pageNumber * size),
+                    offset: (pageNumber * size) - 1,
                 })
                 res.json(countries || 'Country not found')
             }
@@ -140,7 +139,7 @@ router.get('/order/:order/:page', async (req, res) => {
                         ['name', 'DESC']
                     ],
                     limit: size,
-                    offset: (pageNumber * size),
+                    offset: (pageNumber * size) - 1,
                 })
                 res.json(countries || 'Country not found')
             }
@@ -150,7 +149,7 @@ router.get('/order/:order/:page', async (req, res) => {
                         ['population', 'ASC']
                     ],
                     limit: size,
-                    offset: (pageNumber * size),
+                    offset: (pageNumber * size) - 1,
                 })
                 res.json(countries || 'Not found')
             }
@@ -160,7 +159,7 @@ router.get('/order/:order/:page', async (req, res) => {
                         ['population', 'DESC']
                     ],
                     limit: size,
-                    offset: (pageNumber * size),
+                    offset: (pageNumber * size) - 1,
                 })
                 res.json(countries || 'Not found')
             }
@@ -192,14 +191,14 @@ router.get('/region/:region/:page', async (req, res) => {
             }
             res.send(countriesByRegion)
         }
-        if (pageNumber > 0) {
+        if (pageNumber >= 1) {
             const size = 10;
             const countriesByRegion = await Country.findAndCountAll({
                 where: {
                     region: region
                 },
                 limit: size,
-                offset: (pageNumber * size),
+                offset: (pageNumber * size) - 1,
                 order: [
                     ['name', 'ASC']
                 ]

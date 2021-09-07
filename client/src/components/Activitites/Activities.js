@@ -6,7 +6,6 @@ const Activity = () => {
 
     const activities = useSelector(state => state.activities)
 
-    console.log(activities)
     return (
         <>
         </>
