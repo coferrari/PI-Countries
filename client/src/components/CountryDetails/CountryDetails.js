@@ -37,7 +37,7 @@ const CountryDetails = () => {
                     {state.countryDetails.area && <li>{state.countryDetails.area / 1000}</li>}
                     {state.countryDetails.population && <li>{state.countryDetails.population}</li>}
                     {state.countryDetails.Activities && state.countryDetails.Activities.map(activity => (
-                        <div>
+                        <div key={activity.id}>
 
                         <li>{activity.name}</li>
                         <li>{activity.duration}</li>

@@ -24,6 +24,8 @@ function App() {
           </Route>
           <Route exact path="/activities">
             <NavBar />
+          </Route>
+          <Route exact path="/createactivity">
             <ActivityCreate />
           </Route>
         </Switch>

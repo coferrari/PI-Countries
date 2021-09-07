@@ -30,12 +30,7 @@ const ActivityCreate = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (countries) {
-      dispatch(getAllCountries());
-      return () => {
-        dispatch(getCountries('countries', 1)) // para que me los borre todos del estado y me traiga solo 9
-      }
-    }
+    dispatch(getAllCountries())
   }, []);
 
   function handleChange(e) {

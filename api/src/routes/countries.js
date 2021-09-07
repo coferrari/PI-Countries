@@ -65,10 +65,11 @@ router.get('/search/country', async (req, res) => {
                 ['name', 'ASC']
             ]
         })
-        if (country.length === 0) {
-            res.send('Country not found')
+        if (country.count === 0) {
+            res.send({count: 0, rows: "Ups! We couldn't find any country matching your search. Please try again!"})
+        } else {
+            res.json(country)
         }
-        res.json(country)
     } catch (error) {
         res.send(error);
     }
@@ -169,10 +170,61 @@ router.get('/order/:order/:page', async (req, res) => {
     }
 });
 
-router.get('/region/:region/:page', async (req, res) => {
-    let { region, page } = req.params;
+// router.get('/region/:region/:page', async (req, res) => {
+//     let { region, page } = req.params;
+//     const pageNumber = parseInt(page);
+//     region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase())
+//     try {
+//         if (pageNumber === 0) {
+//             const size = 9;
+//             const countriesByRegion = await Country.findAndCountAll({
+//                 where: {
+//                     region: region
+//                 },
+//                 limit: size,
+//                 offset: (pageNumber * size),
+//                 order: [
+//                     ['name', 'ASC']
+//                 ]
+//             })
+//             if (!countriesByRegion.count) {
+//                 res.send('Region not found')
+//             }
+//             res.send(countriesByRegion)
+//         }
+//         if (pageNumber >= 1) {
+//             const size = 10;
+//             const countriesByRegion = await Country.findAndCountAll({
+//                 where: {
+//                     region: region
+//                 },
+//                 limit: size,
+//                 offset: (pageNumber * size) - 1,
+//                 order: [
+//                     ['name', 'ASC']
+//                 ]
+//             })
+//             if (!countriesByRegion.count) {
+//                 res.send('Region not found')
+//             }
+//             res.send(countriesByRegion)
+//         }
+//     } catch (error) {
+//         res.send(error)
+//     }
+// });
+
+router.get('/region/:region/:order/:page', async (req, res) => {
+    let { region, order, page } = req.params
     const pageNumber = parseInt(page);
-    region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase())
+    let condition;
+    region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase());
+
+    if (order === 'AtoZ') { order = 'ASC'; condition = 'name' };
+    if (order === 'ZtoA') { order = 'DESC'; condition = 'name' };
+    if (order === 'PopulationUp') { order = 'ASC'; condition = 'population' };
+    if (order === 'PopulationDown') { order = 'DESC'; condition = 'population' };
+
     try {
         if (pageNumber === 0) {
             const size = 9;
@@ -183,7 +235,7 @@ router.get('/region/:region/:page', async (req, res) => {
                 limit: size,
                 offset: (pageNumber * size),
                 order: [
-                    ['name', 'ASC']
+                    [condition, order]
                 ]
             })
             if (!countriesByRegion.count) {
@@ -200,7 +252,7 @@ router.get('/region/:region/:page', async (req, res) => {
                 limit: size,
                 offset: (pageNumber * size) - 1,
                 order: [
-                    ['name', 'ASC']
+                    [condition, order]
                 ]
             })
             if (!countriesByRegion.count) {

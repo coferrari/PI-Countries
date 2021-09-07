@@ -11,36 +11,20 @@ import {
     POST_ACTIVITY,
     ADD_COUNTRY_FAV,
     REMOVE_COUNTRY_FAV,
-    FILTER_REGION,
     FILTER_ACTIVITIES,
     ORDER_COUNTRIES,
+    ORDER_FILTERED_COUNTRIES,
 
     URL_COUNTRIES,
     URL_COUNTRIES_SEARCH_COUNTRY,
     URL_COUNTRY,
-    URL_FILTER_REGION,
     URL_ORDER,
     URL_POST_ACTIVITY,
-    URL_GET_ACTIVITIES
+    URL_GET_ACTIVITIES,
+    URL_FILTER_ORDER_COUNTRIES
 
 } from './types';
 
-
-export const getCountries = (path, page) => {
-    return (dispatch) => {
-        Axios.get(`${URL_COUNTRIES}/${path}/${page}`)
-            .then(response => {
-                dispatch({
-                    type: GET_COUNTRIES,
-                    payload: response.data
-                })
-            })
-        // .catch(error => {
-
-        // })
-    }
-};
-//
 export const getAllCountries = () => {
     return (dispatch) => {
         Axios.get(`${URL_COUNTRIES}/countries`)
@@ -101,13 +85,6 @@ export const searchCountriesSuccess = (name) => {
     }
 };
 
-export const searchCountriesFailure = (error) => {
-    return {
-        type: SEARCH_COUNTRIES_FAILURE,
-        payload: error
-    }
-};
-
 // internamente va a retornar una funcion, y eso gracias a thunk va a enviar el dispatch
 // no funciona el error
 export const searchCountries = (name) => {
@@ -117,9 +94,9 @@ export const searchCountries = (name) => {
             .then(response => {
                 dispatch(searchCountriesSuccess(response.data))
             })
-            .catch(error => {
-                dispatch(searchCountriesFailure(error))
-            })
+            // .catch(error => {
+            //     dispatch(searchCountriesFailure(error))
+            // })
     }
 };
 
@@ -137,21 +114,6 @@ export const removeCountryFav = (alpha3code) => {
     }
 };
 
-export const filterRegion = (region, page) => {
-    return (dispatch) => {
-        Axios.get(`${URL_FILTER_REGION}/${region}/${page}`)
-            .then(response => {
-                dispatch({
-                    type: FILTER_REGION,
-                    payload: response.data
-                })
-            })
-        // .catch(error => {
-
-        // })
-    }
-};
-
 export const orderCountries = (order, page) => {
     return (dispatch) => {
         Axios.get(`${URL_ORDER}/${order}/${page}`)
@@ -162,10 +124,21 @@ export const orderCountries = (order, page) => {
                 })
             })
         // .catch(error => {
-
         // })
     }
 };
+
+export const orderCountriesFiltered = (filter, order, page) => {
+    return (dispatch) => {
+        Axios.get(`${URL_FILTER_ORDER_COUNTRIES}/${filter}/${order}/${page}`)
+        .then(response => {
+            dispatch({
+                type: ORDER_FILTERED_COUNTRIES,
+                payload: response.data
+            })
+        })
+    }
+}
 
 export const getActivities = () => {
     return (dispatch) => {
@@ -177,7 +150,6 @@ export const getActivities = () => {
                 })
             })
         // .catch(error => {
-
         // })
     }
 };
@@ -196,7 +168,6 @@ export const postActivities = (payload) => {
         dispatch({
             type: POST_ACTIVITY
         })
-        console.log(response)
         return response;
     }
 };

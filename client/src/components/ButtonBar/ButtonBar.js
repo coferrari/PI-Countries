@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SelectButton from "../SelectButton/SelectButton";
-import { filterRegion, getCountries, orderCountries, getActivities, filterActivities, searchCountries } from "../../actions/";
-import { Link } from "react-router-dom";
+import { orderCountries, getActivities, filterActivities, searchCountries, orderCountriesFiltered } from "../../actions/";
 import Countries from '../Countries/Countries';
 
 const ButtonBar = () => {
-  const [state, setState] = useState("All Countries");
+  const [filter, setFilter] = useState("All Countries");
+  const [order, setOrder] = useState("AtoZ");
   const [country, setCountry] = useState("");
+  const [activity, setActivity] = useState("All Activities");
   const dispatch = useDispatch();
   const countries = useSelector((state) => state);
+  const loading = useSelector((state) => state.loading);
 
   let [page, setPage] = useState(1);
   const regions = ["All Countries", "Africa", "Americas", "Asia", "Europe", "Oceania"];
-  const alphaOrder = ["A to Z", "Z to A"];
-  const popOrder = ["Population Up", "Population Down"];
+  const sort = ["A to Z", "Z to A", "Population Up", "Population Down"];
   const activities = ["All Activities", "Summer", "Fall", "Winter", "Spring"];
   const totalCountries = countries.countCountries;
   const totalPages = [];
@@ -22,13 +23,16 @@ const ButtonBar = () => {
     totalPages.push(i);
   };
 
+  console.log(filter, 'filter')
+  console.log(order, 'order')
   const countriesMatch = useSelector(state => state)
   const totalCountriesMatch = countriesMatch.countCountriesMatch;
   const [currentPage, setCurrentPage] = useState(1);
   const [countriesPerPage] = useState(10);
   const lastCountry = currentPage * countriesPerPage;
   const firstCountry = lastCountry - countriesPerPage;
-  const currentCountries = countries.countriesMatch.slice(firstCountry, lastCountry);
+  // if ()
+  const currentCountries = typeof countries.countriesMatch !== 'string' && countries.countriesMatch.slice(firstCountry, lastCountry);
   
   const totalPagesMatch = [];
   for (let i = 0; i < Math.ceil(totalCountriesMatch / 10); i++) {
@@ -40,12 +44,17 @@ const ButtonBar = () => {
     setCountry(e.target.value);
   };
 
-  const handleClick = (e) =>{
+  const handleClickSearch = (e) =>{
     e.preventDefault();
     dispatch(searchCountries(country));
     setCountry('');
-    setState('Search');
+    setFilter('Search');
   };
+
+  const handleClickActivities = (e) => {
+    e.preventDefault();
+    dispatch(getActivities())
+  }
 
   const pagination = (page) => {
     setCurrentPage(page)
@@ -53,17 +62,17 @@ const ButtonBar = () => {
 
   const handleChangeFilter = (e) => {
     e.preventDefault();
-    setState(e.target.value);
+    setFilter(e.target.value);
   };
 
   const handleChangeOrder = (e) => {
     e.preventDefault();
-    setState(e.target.value.replace(/ /g, ""));
+    setOrder(e.target.value.replace(/ /g, ""));
   };
 
   const handleChangeActivities = (e) => {
     e.preventDefault();
-    setState(e.target.value);
+    setActivity(e.target.value);
   };
 
   const handleChangePage = (page) => {
@@ -72,58 +81,19 @@ const ButtonBar = () => {
 
   // lo tuve que separar para que me resetee el valor de page una vez que selecciono otro filtro/orden
   useEffect(() => {
-    if (state === "All Countries"
-    )
-      dispatch(getCountries("countries", 1));
-    if (
-      state === "Africa" ||
-      state === "Americas" ||
-      state === "Asia" ||
-      state === "Europe" ||
-      state === "Oceania"
-    )
-      dispatch(filterRegion(state, 0));
-    if (
-      state === "AtoZ" ||
-      state === "ZtoA" ||
-      state === "PopulationUp" ||
-      state === "PopulationDown"
-    )
-      dispatch(orderCountries(state, 0));
-    if (
-      state === "All Activities"
-    )
-      dispatch(getActivities())
-
-    if (
-      state === "Summer" ||
-      state === "Fall" ||
-      state === "Winter" ||
-      state === "Spring"
-    )
-      dispatch(filterActivities(state.toLowerCase()))
-
-  }, [dispatch, state]);
+    if (filter === "All Countries") dispatch(orderCountries(order, 0))
+    if (filter !== "All Countries" && filter !== "Search") dispatch(orderCountriesFiltered(filter, order,  0));
+  }, [dispatch, filter, order]);
 
   useEffect(() => {
-    if (state === "All Countries"
-    )
-      dispatch(getCountries("countries", page));
-    if (
-      state === "Africa" ||
-      state === "Americas" ||
-      state === "Asia" ||
-      state === "Europe" ||
-      state === "Oceania"
-    )
-      dispatch(filterRegion(state, page - 1));
-    if (
-      state === "AtoZ" ||
-      state === "ZtoA" ||
-      state === "PopulationUp" ||
-      state === "PopulationDown"
-    )
-      dispatch(orderCountries(state, page - 1));
+    if (activity === "All Activities") dispatch(getActivities());
+    if (activity !== "All Activities") dispatch(filterActivities(activity.toLowerCase()));
+
+  }, [dispatch, activity])
+
+  useEffect(() => {
+    if (filter !== "All Countries" && order) dispatch(orderCountriesFiltered(filter, order, page - 1))
+    if (filter === "All Countries" && order) dispatch(orderCountries(order, page - 1));
   }, [dispatch, page]);
 
   return (
@@ -141,7 +111,7 @@ const ButtonBar = () => {
           type="submit"
           disabled={!country}
           onClick={(e) => {
-            handleClick(e);
+            handleClickSearch(e);
           }}
         >
           Search
@@ -152,40 +122,37 @@ const ButtonBar = () => {
           ))}
         </select>
         <select onChange={(e) => handleChangeOrder(e)}>
-          {alphaOrder.map((el) => (
+          {sort.map((el) => (
             <SelectButton el={el} key={el} />
           ))}
         </select>
-        <select onChange={(e) => handleChangeOrder(e)}>
-          {popOrder.map((el) => (
-            <SelectButton el={el} key={el} />
-          ))}
-        </select>
+        <button onClick={(e) => handleClickActivities(e)}>See Activities</button>
         <select onChange={(e) => handleChangeActivities(e)}>
           {activities.map((el) => (
             <SelectButton el={el} key={el} />
           ))}
         </select>
       </div>
-      <Link to="/activities">Create activity</Link>
       <br />
       <br />
-      <div style={{ display: "flex" }}>
+      {!loading && <div style={{ display: "flex" }}>
         {totalPages &&
           totalPages.map((page) => (
             <button key={page} onClick={() => handleChangePage(page)}>
               {page}
             </button>
           ))}
-      </div>
-      <div style={{ display: "flex" }}>
+      </div>}
+      {!loading && <div style={{ display: "flex" }}>
         {totalPagesMatch &&
           totalPagesMatch.map((page) => (
             <button key={page} onClick={() => pagination(page)}>
               {page}
             </button>
           ))}
-      </div>
+      </div>}
+
+
 
       <Countries currentCountries={currentCountries}/>
       <br />

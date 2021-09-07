@@ -7,11 +7,11 @@ const Home = () => {
   const countries = useSelector((state) => state.countries);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!countries.length) {
-      dispatch(getCountries("countries", 1));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!countries.length) {
+  //     dispatch(getCountries("countries", 1));
+  //   }
+  // }, []);
 
   return (
     <>

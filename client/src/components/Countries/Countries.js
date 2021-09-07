@@ -1,10 +1,19 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Country from "../Country/Country";
+import { clearCountryDetail } from '../../actions/index';
 
 const Countries = ({currentCountries}) => {
   const state = useSelector(state => state);
-  
+  const dispatch = useDispatch();
+   console.log(state)
+   console.log(currentCountries)
+
+   useEffect(() => {
+    return () => {
+        dispatch(clearCountryDetail())
+    }
+}, []);
   // ver tema de error, sino sacar del estado
   return (
     <>
@@ -19,7 +28,7 @@ const Countries = ({currentCountries}) => {
             key={country.alpha3Code}
           />
         ))}
-      {currentCountries?.map((country) => (
+      {!state.loading && currentCountries && currentCountries?.map((country) => (
         <Country
             name={country.name}
             flag={country.flag}
@@ -28,7 +37,7 @@ const Countries = ({currentCountries}) => {
             key={country.alpha3Code}
           />
       ))}
-      {state.error && <span>{state.error}</span>}
+      {!state.loading && !state.currentCountries && typeof state.countriesMatch === 'string' && <div>{state.countriesMatch}</div>}
     </>
   );
 };
