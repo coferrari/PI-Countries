@@ -1,11 +1,10 @@
 import {
   GET_COUNTRIES,
-  GET_COUNTRY_DETAIL_REQUEST,
+  REQUEST_LOADING,
   GET_COUNTRY_DETAIL_SUCCESS,
   CLEAR_COUNTRY_DETAIL,
   SEARCH_COUNTRIES_REQUEST,
   SEARCH_COUNTRIES_SUCCESS,
-  SEARCH_COUNTRIES_FAILURE,
   GET_ACTIVITIES,
   ADD_COUNTRY_FAV,
   REMOVE_COUNTRY_FAV,
@@ -19,7 +18,6 @@ const initialState = {
   loading: false,
   countries: [],
   countCountries: 0,
-  // error: "",
   countriesFav: [],
   countryDetails: {},
   activities: [],
@@ -33,12 +31,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_COUNTRIES:
       return {
         ...state,
+        loading: false,
         countries: payload.rows,
         countCountries: payload.count,
         countriesMatch: [],
         countCountriesMatch: 0,
       };
-    case GET_COUNTRY_DETAIL_REQUEST:
+    case REQUEST_LOADING:
       return {
         ...state,
         loading: true,
@@ -68,16 +67,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         loading: false,
         countriesMatch: payload.rows,
         countCountriesMatch: payload.count,
-        // error: "",
       };
-    // case SEARCH_COUNTRIES_FAILURE:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     countries: [],
-    //     countCountries: 1,
-    //     error: payload,
-    //   };
     case ADD_COUNTRY_FAV:
       return {
         ...state,
@@ -93,6 +83,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ORDER_COUNTRIES:
       return {
         ...state,
+        loading: false,
         countries: payload.rows,
         countCountries: payload.count,
         countriesMatch: [],
@@ -101,6 +92,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ORDER_FILTERED_COUNTRIES:
       return {
         ...state,
+        loading: false,
         countries: payload.rows,
         countCountries: payload.count,
         countriesMatch: [],
@@ -109,6 +101,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_ACTIVITIES:
       return {
         ...state,
+        loading: false,
         activities: payload,
         allActivities: payload,
       };
@@ -120,6 +113,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
           : allActivities.filter((activity) => activity.season === payload);
       return {
         ...state,
+        loading: false,
         activities: activitiesFiltered || payload,
         countriesMatch: [],
         countCountriesMatch: 0,
@@ -134,3 +128,4 @@ const rootReducer = (state = initialState, { type, payload }) => {
 };
 
 export default rootReducer;
+

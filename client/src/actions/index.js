@@ -1,12 +1,10 @@
 import Axios from 'axios';
 import {
     GET_COUNTRIES,
-    GET_COUNTRY_DETAIL_REQUEST,
+    REQUEST_LOADING,
     GET_COUNTRY_DETAIL_SUCCESS,
     CLEAR_COUNTRY_DETAIL,
-    SEARCH_COUNTRIES_REQUEST,
     SEARCH_COUNTRIES_SUCCESS,
-    SEARCH_COUNTRIES_FAILURE,
     GET_ACTIVITIES,
     POST_ACTIVITY,
     ADD_COUNTRY_FAV,
@@ -25,8 +23,15 @@ import {
 
 } from './types';
 
+export const requestLoading = () => {
+    return {
+        type: REQUEST_LOADING
+    }
+}
+
 export const getAllCountries = () => {
     return (dispatch) => {
+        dispatch(requestLoading())
         Axios.get(`${URL_COUNTRIES}/countries`)
             .then(response => {
                 dispatch({
@@ -40,12 +45,6 @@ export const getAllCountries = () => {
     }
 };
 
-export const getCountryDetailRequest = () => {
-    return {
-        type: GET_COUNTRY_DETAIL_REQUEST
-    }
-};
-
 export const getCountryDetailSuccess = (alpha3Code) => {
     return {
         type: GET_COUNTRY_DETAIL_SUCCESS,
@@ -55,7 +54,7 @@ export const getCountryDetailSuccess = (alpha3Code) => {
 
 export const getCountryDetail = (alpha3code) => {
     return (dispatch) => {
-        dispatch(getCountryDetailRequest())
+        dispatch(requestLoading())
         Axios.get(`${URL_COUNTRY}${alpha3code}`)
             .then(response => {
                 dispatch(getCountryDetailSuccess(response.data))
@@ -72,12 +71,6 @@ export const clearCountryDetail = () => {
     }
 };
 
-export const searchCountriesRequest = () => {
-    return {
-        type: SEARCH_COUNTRIES_REQUEST
-    }
-};
-
 export const searchCountriesSuccess = (name) => {
     return {
         type: SEARCH_COUNTRIES_SUCCESS,
@@ -89,7 +82,7 @@ export const searchCountriesSuccess = (name) => {
 // no funciona el error
 export const searchCountries = (name) => {
     return (dispatch) => {
-        dispatch(searchCountriesRequest())
+        dispatch(requestLoading())
         Axios.get(`${URL_COUNTRIES_SEARCH_COUNTRY}${name}`)
             .then(response => {
                 dispatch(searchCountriesSuccess(response.data))
@@ -137,6 +130,7 @@ export const orderCountriesFiltered = (filter, order, page) => {
                 payload: response.data
             })
         })
+        //.ctahc
     }
 }
 
@@ -155,7 +149,6 @@ export const getActivities = () => {
 };
 
 export const filterActivities = (payload) => {
-    console.log(payload, 'payload')
     return {
         type: FILTER_ACTIVITIES,
         payload: payload
@@ -164,6 +157,7 @@ export const filterActivities = (payload) => {
 
 export const postActivities = (payload) => {
     return (dispatch) => {
+        dispatch(requestLoading())
         const response = Axios.post(`${URL_POST_ACTIVITY}`, payload)
         dispatch({
             type: POST_ACTIVITY

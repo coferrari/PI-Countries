@@ -4,10 +4,11 @@ import { useSelector } from 'react-redux';
 
 const Activity = () => {
 
-    const activities = useSelector(state => state.activities)
+    const {loading, activities, allActivities} = useSelector(state => state);
 
     return (
         <>
+        {activities}
         </>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { getCountries, getAllCountries, postActivities } from "../../actions/index";
+import { getAllCountries, postActivities } from "../../actions/index";
 
 function validate(input) {
   let errors = {};
@@ -129,7 +129,7 @@ const ActivityCreate = () => {
   return (
     <>
       <Link to="/home/countries">
-        <button>Back to Countries</button>
+        <button>Back to home</button>
       </Link>
       <h2>Create activity</h2>
       <form onSubmit={(e) => handleSubmit(e)}>

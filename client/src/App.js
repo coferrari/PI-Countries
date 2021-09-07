@@ -23,7 +23,8 @@ function App() {
             <CountryDetails />
           </Route>
           <Route exact path="/activities">
-            <NavBar />
+          <NavBar />
+            <Home />
           </Route>
           <Route exact path="/createactivity">
             <ActivityCreate />

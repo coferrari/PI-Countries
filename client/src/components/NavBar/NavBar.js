@@ -6,9 +6,6 @@ const NavBar = () => {
     <>
       // LOGO
 
-      <Link to="/createactivity">Create activity</Link>
-      <Link to="/activities">// GO TO ACTIVITIES</Link>
-      
     </>
   );
 };
