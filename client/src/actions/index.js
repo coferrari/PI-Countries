@@ -41,7 +41,6 @@ export const getAllCountries = () => {
                 })
             })
         // .catch(error => {
-
         // })
     }
 };

@@ -128,8 +128,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return {
           ...state,
           loading: false,
-          activities: payload,
-          allActivities: payload
+          activities: [],
+          allActivities: []
+          // activities: payload,
+          // allActivities: payload
         };
       }
     case REMOVE_ACTIVITY:

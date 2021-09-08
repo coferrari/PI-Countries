@@ -1,14 +1,15 @@
-import "./App.css";
+import style from "./App.module.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
 import NavBar from "./components/NavBar/NavBar";
 import CountryDetails from "./components/CountryDetails/CountryDetails";
 import Home from "./components/Home/Home";
 import ActivityCreate from "./components/ActivityCreate/ActivityCreate";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
-    <div className="App App-header">
+    <div className={style.app, style.header}>
       <BrowserRouter>
         <Route exact path="/">
           <LandingPage />
@@ -23,13 +24,14 @@ function App() {
             <CountryDetails />
           </Route>
           <Route exact path="/activities">
-          <NavBar />
+            <NavBar />
             <Home />
           </Route>
           <Route exact path="/createactivity">
             <ActivityCreate />
           </Route>
         </Switch>
+        <Footer />
       </BrowserRouter>
     </div>
   );

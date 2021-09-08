@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 const NavBar = () => {
   return (
     <>
-      // LOGO
-
+      <div>//LOGO</div>
+      <div>// IL MONDO</div>
     </>
   );
 };

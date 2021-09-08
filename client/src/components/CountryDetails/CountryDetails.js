@@ -5,7 +5,7 @@ import { clearCountryDetail, getCountryDetail } from '../../actions';
 
 const CountryDetails = () => {
     const { alpha3code } = useParams();
-    const state = useSelector(state => state)
+    const { loading, countryDetails } = useSelector(state => state)
     const dispatch = useDispatch();
 
     const history = useHistory();
@@ -18,25 +18,27 @@ const CountryDetails = () => {
     }, []);
 
     function handleClick() {
-        history.goBack();
+        history.push(`/home/countries`);
     }
+    // function handleClick() {
+    //     history.goBack();
+    // }
 
-    // loading no seria necesario con el useEffect, ver de sacar
     // validar solo en los que los datos puedan ser NULL, EL RESTO CREO QUE ES INNNECESARIO
 
     return (
         <>
-            {state.detailsLoading && <div></div>}
-            {state.countryDetails && <div>
-                {state.countryDetails.alpha3code && <h2>{state.countryDetails.alpha3Code}</h2>}
-                {state.countryDetails.name && <h3>{state.countryDetails.name}</h3>}
-                {state.countryDetails.flag && <img src={state.countryDetails.flag} height="300px" />}
+            {loading && <div></div>}
+            {countryDetails && <div>
+                {countryDetails.alpha3code && <h2>{countryDetails.alpha3Code}</h2>}
+                {countryDetails.name && <h3>{countryDetails.name}</h3>}
+                {countryDetails.flag && <img src={countryDetails.flag} height="300px" />}
                 <ul>
-                    {state.countryDetails.capital && <li>{state.countryDetails.capital}</li>}
-                    {state.countryDetails.region && <li>{state.countryDetails.region}</li>}
-                    {state.countryDetails.area && <li>{state.countryDetails.area / 1000}</li>}
-                    {state.countryDetails.population && <li>{state.countryDetails.population}</li>}
-                    {state.countryDetails.Activities && state.countryDetails.Activities.map(activity => (
+                    {countryDetails.capital && <li>{countryDetails.capital}</li>}
+                    {countryDetails.region && <li>{countryDetails.region}</li>}
+                    {countryDetails.area && <li>{countryDetails.area / 1000}</li>}
+                    {countryDetails.population && <li>{countryDetails.population}</li>}
+                    {countryDetails.Activities && countryDetails.Activities.map(activity => (
                         <div key={activity.id}>
 
                         <li>{activity.name}</li>

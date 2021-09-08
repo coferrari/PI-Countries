@@ -6,12 +6,12 @@ import { clearCountryDetail } from '../../actions/index';
 const Countries = ({currentCountries}) => {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-
-   useEffect(() => {
-    return () => {
-        dispatch(clearCountryDetail())
-    }
-}, []);
+// no se por que lo puse aca ????????
+//    useEffect(() => {
+//     return () => {
+//         dispatch(clearCountryDetail())
+//     }
+// }, []);
   // ver tema de error, sino sacar del estado
   return (
     <>

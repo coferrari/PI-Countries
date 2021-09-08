@@ -12,7 +12,7 @@ const Home = () => {
   const [order, setOrder] = useState("AtoZ");
   const [country, setCountry] = useState("");
   const [activity, setActivity] = useState("All Activities");
-  const [selected, setSelected] = useState(false)
+  const [selected, setSelected] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -32,7 +32,6 @@ const Home = () => {
   const [countriesPerPage] = useState(10);
   const lastCountry = currentPage * countriesPerPage;
   const firstCountry = lastCountry - countriesPerPage;
-  // if ()
   const currentCountries = typeof countriesMatch !== 'string' && countriesMatch.slice(firstCountry, lastCountry);
 
   const totalPagesMatch = [];
@@ -65,7 +64,6 @@ const Home = () => {
   const handleClickActivities = (e) => {
     e.preventDefault();
     selected ? setSelected(false) : setSelected(true)
-    dispatch(getActivities())
   };
 
   const handleChangeActivities = (e) => {
@@ -81,15 +79,16 @@ const Home = () => {
     setCurrentPage(page)
   };
 
-  // lo tuve que separar para que me resetee el valor de page una vez que selecciono otro filtro/orden
+  // lo tuve que separar para que me resetee el valor de page una vez que selecciono otro filtro/orden // hace que orderCountries se despache 2 veces
+
   useEffect(() => {
-    if (filter === "All Countries") dispatch(orderCountries(order, 0))
+    if (filter === "All Countries" && order) dispatch(orderCountries(order, 0))
     if (filter !== "All Countries" && filter !== "Search") dispatch(orderCountriesFiltered(filter, order, 0));
   }, [dispatch, filter, order]);
 
   useEffect(() => {
-    if (filter !== "All Countries" && order) dispatch(orderCountriesFiltered(filter, order, page - 1))
     if (filter === "All Countries" && order) dispatch(orderCountries(order, page - 1));
+    if (filter !== "All Countries" && filter !== "Search" && order) dispatch(orderCountriesFiltered(filter, order, page - 1))
   }, [dispatch, page]);
 
   return (
@@ -167,7 +166,6 @@ const Home = () => {
       }
       {selected && 
       <Activities activity={activity}/>
-      
       }
       <br />
       <br />
