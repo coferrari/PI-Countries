@@ -6,8 +6,6 @@ import { clearCountryDetail } from '../../actions/index';
 const Countries = ({currentCountries}) => {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-   console.log(state)
-   console.log(currentCountries)
 
    useEffect(() => {
     return () => {

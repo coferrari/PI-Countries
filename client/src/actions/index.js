@@ -10,16 +10,17 @@ import {
     ADD_COUNTRY_FAV,
     REMOVE_COUNTRY_FAV,
     FILTER_ACTIVITIES,
+    REMOVE_ACTIVITY,
     ORDER_COUNTRIES,
     ORDER_FILTERED_COUNTRIES,
-
     URL_COUNTRIES,
     URL_COUNTRIES_SEARCH_COUNTRY,
     URL_COUNTRY,
     URL_ORDER,
     URL_POST_ACTIVITY,
     URL_GET_ACTIVITIES,
-    URL_FILTER_ORDER_COUNTRIES
+    URL_FILTER_ORDER_COUNTRIES,
+    URL_REMOVE_ACTIVITY
 
 } from './types';
 
@@ -27,7 +28,7 @@ export const requestLoading = () => {
     return {
         type: REQUEST_LOADING
     }
-}
+};
 
 export const getAllCountries = () => {
     return (dispatch) => {
@@ -63,7 +64,7 @@ export const getCountryDetail = (alpha3code) => {
 
         // })
     }
-}
+};
 
 export const clearCountryDetail = () => {
     return {
@@ -104,6 +105,18 @@ export const removeCountryFav = (alpha3code) => {
     return {
         type: REMOVE_COUNTRY_FAV,
         payload: alpha3code
+    }
+};
+
+export const removeActivity = (id) => {
+    return (dispatch) => {
+        Axios.delete(`${URL_REMOVE_ACTIVITY}/${id}`)
+        // .then(response => {
+            dispatch({
+                type: REMOVE_ACTIVITY,
+                payload: id
+            })
+        // })
     }
 };
 

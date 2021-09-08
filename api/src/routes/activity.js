@@ -3,7 +3,6 @@ const { Country, Activity } = require("../db");
 
 const router = Router();
 
-// buscar por pais y actividad
 router.get("/", async (req, res) => {
   try {
     const activities = await Activity.findAll({
@@ -45,9 +44,7 @@ router.post("/", async function (req, res) {
             alpha3Code: countryCode[0],
           },
         });
-        await activity[0].addCountry(country); // [0] pq findOrCreate devuelve un arreglo con 2 elementos
-        // await page.addCategories(categories);
-        // res.redirect(page.route);
+        await activity[0].addCountry(country); 
         res.send(country);
       }
       if (countryCode.length > 1) {
@@ -59,6 +56,20 @@ router.post("/", async function (req, res) {
     }
   } else {
     res.send("Missing parameters");
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const activity = await Activity.destroy({
+      where: {
+        id: id
+      }
+    })
+    res.json(activity)
+  } catch (error) {
+    res.send(error)
   }
 });
 

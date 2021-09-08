@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 // const Country = ({name, flag, region, key}) => {
 const Country = ({ alpha3Code, name, flag, region }) => {
-  // console.log(props)
   return (
     <div>
       <Link to={`/country/${alpha3Code}`}>

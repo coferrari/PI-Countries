@@ -12,6 +12,7 @@ import {
   ORDER_COUNTRIES,
   ORDER_FILTERED_COUNTRIES,
   POST_ACTIVITY,
+  REMOVE_ACTIVITY,
 } from "../actions/types";
 
 const initialState = {
@@ -52,7 +53,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         countryDetails: [],
-        countriesMatch: [] //
+        countriesMatch: [], //
       };
     case SEARCH_COUNTRIES_REQUEST:
       return {
@@ -105,22 +106,41 @@ const rootReducer = (state = initialState, { type, payload }) => {
         activities: payload,
         allActivities: payload,
       };
-    case FILTER_ACTIVITIES:
-      const allActivities = state.allActivities;
-      const activitiesFiltered =
-        payload === "All Activities"
-          ? allActivities
-          : allActivities.filter((activity) => activity.season === payload);
-      return {
-        ...state,
-        loading: false,
-        activities: activitiesFiltered || payload,
-        countriesMatch: [],
-        countCountriesMatch: 0,
-      };
     case POST_ACTIVITY:
       return {
         ...state,
+      };
+    case FILTER_ACTIVITIES:
+      if (typeof state.allActivities !== 'string') {
+        const allActivities = state.allActivities;
+        const activitiesFiltered =
+          payload === "All Activities"
+            ? allActivities
+            : allActivities.filter((activity) => activity.season === payload);
+        return {
+          ...state,
+          loading: false,
+          activities: activitiesFiltered || payload,
+          countriesMatch: [],
+          countCountriesMatch: 0,
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          activities: payload,
+          allActivities: payload
+        };
+      }
+    case REMOVE_ACTIVITY:
+      return {
+        ...state,
+        activities: state.activities.filter(
+          (activity) => activity.id !== payload
+        ),
+        allActivities: state.allActivities.filter(
+          (activity) => activity.id !== payload
+        ),
       };
     default:
       return state;
@@ -128,4 +148,3 @@ const rootReducer = (state = initialState, { type, payload }) => {
 };
 
 export default rootReducer;
-

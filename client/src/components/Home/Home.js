@@ -88,12 +88,6 @@ const Home = () => {
   }, [dispatch, filter, order]);
 
   useEffect(() => {
-    if (activity === "All Activities") dispatch(getActivities());
-    if (activity !== "All Activities") dispatch(filterActivities(activity.toLowerCase()));
-
-  }, [dispatch, activity])
-
-  useEffect(() => {
     if (filter !== "All Countries" && order) dispatch(orderCountriesFiltered(filter, order, page - 1))
     if (filter === "All Countries" && order) dispatch(orderCountries(order, page - 1));
   }, [dispatch, page]);
@@ -105,7 +99,7 @@ const Home = () => {
     <>
         <input
           type="text"
-          placeholder="Country"
+          placeholder="Search country..."
           value={country}
           onChange={(e) => {
             handleInputChange(e);
@@ -116,7 +110,6 @@ const Home = () => {
     {country &&
     <button
           type="submit"
-          // disabled={!country}
           onClick={(e) => {
             handleClickSearch(e);
           }}
@@ -173,7 +166,7 @@ const Home = () => {
         <Countries currentCountries={currentCountries} />
       }
       {selected && 
-      <Activities />
+      <Activities activity={activity}/>
       
       }
       <br />
