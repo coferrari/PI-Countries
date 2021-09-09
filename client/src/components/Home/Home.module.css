@@ -1,0 +1,51 @@
+.containerHome {
+    top: 100px;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    background-color: yellow;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+}
+
+.searchBar {
+    border: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    width: 200px;
+    padding: 5px 10px;
+    font-family: monospace;
+    background-color: white;
+}
+
+.selectBox {
+    font-family: 'Rubik', sans-serif;
+    border: none;
+    font-weight: 400;
+    background-color: white;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.paginationContainer {
+    display: flex;
+    align-items: center;
+    z-index: 100;
+}
+
+.btnPagination {
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    color: pink;
+}
+
+.btnPagination:hover {
+    color: yellow;
+}

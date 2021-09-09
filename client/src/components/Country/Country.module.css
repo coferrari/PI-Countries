@@ -1,0 +1,45 @@
+.container {
+    background-color: #293241;
+    width: 300px;
+    height: 380px;
+    margin: 20px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.container:hover {
+    transform: scale(1.03);
+    opacity: .95;
+}
+
+.flag {
+    width: 100%;
+    max-height: 200px;
+    padding: 5px;
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.cardLink {
+    text-decoration: none;
+}
+
+.cardText {
+    top: 50%;
+    padding: 10px;
+    color: white;
+    align-items: baseline;
+}
+
+.cardTitle {
+    font-size: 22px;
+}
+
+

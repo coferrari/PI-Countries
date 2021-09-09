@@ -5,6 +5,7 @@ import { orderCountries, getActivities, filterActivities, searchCountries, order
 import Countries from '../Countries/Countries';
 import Activities from '../Activitites/Activities';
 import { Link } from "react-router-dom";
+import style from "./Home.module.css";
 
 const Home = () => {
   // ver de acomodar todo dentro de un objeto
@@ -93,82 +94,92 @@ const Home = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: "blue" }}>
-    {!selected &&
-    <>
-        <input
-          type="text"
-          placeholder="Search country..."
-          value={country}
-          onChange={(e) => {
-            handleInputChange(e);
-          }}
-        ></input>
-    </> 
-    }
-    {country &&
-    <button
-          type="submit"
-          onClick={(e) => {
-            handleClickSearch(e);
-          }}
-        >
-          Search
+      <div>
+        <div className={style.containerHome}>
+          {!selected &&
+            <>
+              <input className={style.searchBar}
+                type="text"
+                placeholder="Search country..."
+                value={country}
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+              ></input>
+            </>
+          }
+          {country &&
+            <button
+              type="submit"
+              onClick={(e) => {
+                handleClickSearch(e);
+              }}
+            >
+              Search
       </button>}
-    {selected && <Link to='/activity'></Link> }
-      {!selected && 
-      <>
-        <select onChange={(e) => handleChangeFilter(e)}>
-          {regions.map((el) => (
-            <SelectButton el={el} key={el} />
-          ))}
-        </select>
-        <select onChange={(e) => handleChangeOrder(e)}>
-          {sort.map((el) => (
-            <SelectButton el={el} key={el} />
-          ))}
-        </select>
-        </>
-      }
-        {selected && 
-          <>
-          <Link to='/createactivity'> <button>Create activity!!</button></Link>
-        <select onChange={(e) => handleChangeActivities(e)}>
-          {activities.map((el) => (
-            <SelectButton el={el} key={el} />
-          ))}
-        </select>
-        </>
-        }
-        <button onClick={(e) => handleClickActivities(e)}>{selected ? <Link to='/home/countries'>BACK TO COUNTRIES</Link>
-         : <Link to='/activities'>EXPLORE ACTIVITIES</Link>}</button>
+          {selected && <Link to='/activity'></Link>}
+          {!selected &&
+            <>
+              <select 
+              className={style.selectBox}
+              onChange={(e) => handleChangeFilter(e)}>
+                {regions.map((el) => (
+                  <SelectButton el={el} key={el} />
+                ))}
+              </select>
+              <select 
+              className={style.selectBox}
+              onChange={(e) => handleChangeOrder(e)}>
+                {sort.map((el) => (
+                  <SelectButton el={el} key={el} />
+                ))}
+              </select>
+            </>
+          }
+          {selected &&
+            <>
+              <Link to='/createactivity'> <button>Create activity!!</button></Link>
+              <select 
+              className={style.selectBox}
+              onChange={(e) => handleChangeActivities(e)}>
+                {activities.map((el) => (
+                  <SelectButton el={el} key={el} />
+                ))}
+              </select>
+            </>
+          }
+          <button onClick={(e) => handleClickActivities(e)} className={style.searchBar}>{selected ? <Link to='/home/countries' className={style.link}>BACK TO COUNTRIES</Link>
+            : <Link to='/activities' className={style.link}>EXPLORE ACTIVITIES</Link>}</button>
+        </div>
       </div>
-      <br />
-      <br />
-      {!loading && !selected && <div style={{ display: "flex" }}>
+
+
+      {!selected &&
+        <Countries currentCountries={currentCountries} />
+      }
+      {selected &&
+        <Activities activity={activity} />
+      }
+      {!loading && !selected && <div className={style.paginationContainer}>
+
         {totalPages &&
           totalPages.map((page) => (
-            <button key={page} onClick={() => handleChangePage(page)}>
+            <button className={style.btnPagination}
+            key={page} onClick={() => handleChangePage(page)}>
               {page}
             </button>
           ))}
+
       </div>}
       {!loading && !selected && <div style={{ display: "flex" }}>
         {totalPagesMatch &&
           totalPagesMatch.map((page) => (
-            <button key={page} onClick={() => pagination(page)}>
+            <button className={style.btnPagination}
+            key={page} onClick={() => pagination(page)}>
               {page}
             </button>
           ))}
       </div>}
-      {!selected &&
-        <Countries currentCountries={currentCountries} />
-      }
-      {selected && 
-      <Activities activity={activity}/>
-      }
-      <br />
-      <br />
     </>
   );
 };

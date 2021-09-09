@@ -1,0 +1,9 @@
+.countriesContainer {
+    top: 150px;
+    bottom: 100px;
+    position: relative;
+    padding: 0px 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
