@@ -1,51 +1,106 @@
-.containerHome {
-    top: 100px;
-    left: 0;
-    width: 100%;
-    position: fixed;
-    background-color: yellow;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    z-index: 100;
+.containerBar {
+  top: 85px;
+  left: 0;
+  width: 100%;
+  position: fixed;
+  background-color: #3d5a80;
+  padding: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  z-index: 100;
 }
 
 .searchBar {
-    border: none;
-    text-transform: uppercase;
-    font-size: 14px;
-    width: 200px;
-    padding: 5px 10px;
-    font-family: monospace;
-    background-color: white;
+  border: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  width: 220px;
+  padding: 10px;
+  letter-spacing: 1px;
+  font-family: "Helvetica", sans-serif;
+  font-weight: 400px;
+  background-color: #3d5a80;
+  opacity: 0.5;
+  color: white;
+  border: 1px solid white;
+}
+
+::placeholder {
+  color: white;
+  opacity: 1;
 }
 
 .selectBox {
-    font-family: 'Rubik', sans-serif;
-    border: none;
-    font-weight: 400;
-    background-color: white;
-    font-family: monospace;
-    font-size: 14px;
+  width: 220px;
+  padding: 10px;
+  font-family: "Helvetica", sans-serif;
+  font-weight: 400px;
+  border: none;
+  font-weight: 400;
+  background-color: #3d5a80;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: white;
 }
 
 .link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .paginationContainer {
-    display: flex;
-    align-items: center;
-    z-index: 100;
+  display: flex;
+  align-items: center;
+  z-index: 100;
 }
 
+.paginationContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .btnPagination {
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 100;
-    color: pink;
+  border: none;
+  font-size: 18px;
+  font-family: "Helvetica", sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  top: 200px;
+  position: relative;
+  background-color: #f5f3f4;
+  color: #293241;
+  padding: 10px;
+  width: 40px;
 }
 
 .btnPagination:hover {
-    color: yellow;
+  font-weight: 600;
+  background-color: #3d5a80;
+  color: white;
+}
+
+.active {
+    font-weight: 600;
+    background-color: #3d5a80;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-family: "Helvetica", sans-serif;
+    cursor: pointer;
+    top: 200px;
+    position: relative;
+    padding: 10px;
+    width: 40px;
+}
+
+.btnSearch {
+  background-color: #3d5a80;
+  border: none;
+  font-size: 18px;
+  padding: 0px 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
 }

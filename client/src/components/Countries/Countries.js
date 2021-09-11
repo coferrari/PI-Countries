@@ -20,7 +20,7 @@ const Countries = ({ currentCountries }) => {
       <div className={style.countriesContainer}>
         {state.countries.length >= 1 &&
           state.countries.map((country) => (
-            <div>
+            <div key={country.alpha3Code}>
               <Country
                 name={country.name}
                 flag={country.flag}
@@ -45,10 +45,12 @@ const Countries = ({ currentCountries }) => {
               capital={country.capital}
             />
           ))}
+      </div>
+      <div className={style.noMatch}>
         {!state.loading &&
           !state.currentCountries &&
           typeof state.countriesMatch === "string" && (
-            <div>{state.countriesMatch}</div>
+            <div >{state.countriesMatch}</div>
           )}
       </div>
     </>

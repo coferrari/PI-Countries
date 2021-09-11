@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
       allowNull: true
     },
     area: {
-      type: DataTypes.STRING, // con INTEGER me rompe
+      type: DataTypes.STRING,
       allowNull: true
     },
     population: {

@@ -9,7 +9,7 @@ const LandingPage = () => {
             <br />
             <NavLink to='/home/countries'>
                 <img src={Logo} width="300" height="300" alt='img not found' />
-                <button>Entrar</button>
+                <button>Explore the world!</button>
             </NavLink>
 
         </>

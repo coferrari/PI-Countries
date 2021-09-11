@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SelectButton from "../SelectButton/SelectButton";
-import { orderCountries, getActivities, filterActivities, searchCountries, orderCountriesFiltered } from "../../actions/";
-import Countries from '../Countries/Countries';
-import Activities from '../Activitites/Activities';
+import {
+  orderCountries,
+  getActivities,
+  filterActivities,
+  searchCountries,
+  orderCountriesFiltered,
+} from "../../actions/";
+import Countries from "../Countries/Countries";
+import Activities from "../Activitites/Activities";
 import { Link } from "react-router-dom";
 import style from "./Home.module.css";
+import searchIcon from "../../img/searchicon.svg";
 
 const Home = () => {
   // ver de acomodar todo dentro de un objeto
@@ -17,28 +24,39 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
-  const { countCountries, countCountriesMatch, countriesMatch, loading } = useSelector(state => state);
+  const { countCountries, countCountriesMatch, countriesMatch, loading } =
+    useSelector((state) => state);
 
   let [page, setPage] = useState(1);
-  const regions = ["All Countries", "Africa", "Americas", "Asia", "Europe", "Oceania"];
+
+  const regions = [
+    "All Countries",
+    "Africa",
+    "Americas",
+    "Asia",
+    "Europe",
+    "Oceania",
+  ];
   const sort = ["A to Z", "Z to A", "Population Up", "Population Down"];
   const activities = ["All Activities", "Summer", "Fall", "Winter", "Spring"];
 
   const totalPages = [];
   for (let i = 1; i < Math.ceil(countCountries / 9.75) + 1; i++) {
     totalPages.push(i);
-  };
+  }
 
   const [currentPage, setCurrentPage] = useState(1);
   const [countriesPerPage] = useState(10);
   const lastCountry = currentPage * countriesPerPage;
   const firstCountry = lastCountry - countriesPerPage;
-  const currentCountries = typeof countriesMatch !== 'string' && countriesMatch.slice(firstCountry, lastCountry);
+  const currentCountries =
+    typeof countriesMatch !== "string" &&
+    countriesMatch.slice(firstCountry, lastCountry);
 
   const totalPagesMatch = [];
   for (let i = 0; i < Math.ceil(countCountriesMatch / 10); i++) {
-    totalPagesMatch.push(i + 1)
-  };
+    totalPagesMatch.push(i + 1);
+  }
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -48,23 +66,25 @@ const Home = () => {
   const handleClickSearch = (e) => {
     e.preventDefault();
     dispatch(searchCountries(country));
-    setCountry('');
-    setFilter('Search');
+    setCountry("");
+    setFilter("Search");
   };
 
   const handleChangeFilter = (e) => {
     e.preventDefault();
     setFilter(e.target.value);
+    setPage(1)
   };
 
   const handleChangeOrder = (e) => {
     e.preventDefault();
     setOrder(e.target.value.replace(/ /g, ""));
+    setPage(1)
   };
 
   const handleClickActivities = (e) => {
     e.preventDefault();
-    selected ? setSelected(false) : setSelected(true)
+    selected ? setSelected(false) : setSelected(true);
   };
 
   const handleChangeActivities = (e) => {
@@ -77,28 +97,32 @@ const Home = () => {
   };
 
   const pagination = (page) => {
-    setCurrentPage(page)
+    setCurrentPage(page);
   };
 
   // lo tuve que separar para que me resetee el valor de page una vez que selecciono otro filtro/orden // hace que orderCountries se despache 2 veces
 
   useEffect(() => {
-    if (filter === "All Countries" && order) dispatch(orderCountries(order, 0))
-    if (filter !== "All Countries" && filter !== "Search") dispatch(orderCountriesFiltered(filter, order, 0));
+    if (filter === "All Countries" && order) dispatch(orderCountries(order, 0));
+    if (filter !== "All Countries" && filter !== "Search")
+      dispatch(orderCountriesFiltered(filter, order, 0));
   }, [dispatch, filter, order]);
 
   useEffect(() => {
-    if (filter === "All Countries" && order) dispatch(orderCountries(order, page - 1));
-    if (filter !== "All Countries" && filter !== "Search" && order) dispatch(orderCountriesFiltered(filter, order, page - 1))
-  }, [dispatch, page]);
+    if (filter === "All Countries" && order)
+      dispatch(orderCountries(order, page - 1));
+    if (filter !== "All Countries" && filter !== "Search" && order)
+      dispatch(orderCountriesFiltered(filter, order, page - 1));
+  }, [dispatch, page, order, filter]); // order y filter las agregue por warning
 
   return (
     <>
       <div>
-        <div className={style.containerHome}>
-          {!selected &&
+        <div className={style.containerBar}>
+          {!selected && (
             <>
-              <input className={style.searchBar}
+              <input
+                className={style.searchBar}
                 type="text"
                 placeholder="Search country..."
                 value={country}
@@ -107,79 +131,112 @@ const Home = () => {
                 }}
               ></input>
             </>
-          }
-          {country &&
+          )}
+          {country && (
             <button
+              className={style.btnSearch}
               type="submit"
               onClick={(e) => {
                 handleClickSearch(e);
               }}
             >
-              Search
-      </button>}
-          {selected && <Link to='/activity'></Link>}
-          {!selected &&
+              <img
+                src={searchIcon}
+                alt="searchIcon"
+                className={style.searchIcon}
+              />
+            </button>
+          )}
+          {selected && <Link to="/activity"></Link>}
+          {!selected && (
             <>
-              <select 
-              className={style.selectBox}
-              onChange={(e) => handleChangeFilter(e)}>
+              <select
+                className={style.selectBox}
+                onChange={(e) => handleChangeFilter(e)}
+              >
                 {regions.map((el) => (
                   <SelectButton el={el} key={el} />
                 ))}
               </select>
-              <select 
-              className={style.selectBox}
-              onChange={(e) => handleChangeOrder(e)}>
+              <select
+                className={style.selectBox}
+                onChange={(e) => handleChangeOrder(e)}
+              >
                 {sort.map((el) => (
                   <SelectButton el={el} key={el} />
                 ))}
               </select>
             </>
-          }
-          {selected &&
+          )}
+          {selected && (
             <>
-              <Link to='/createactivity'> <button>Create activity!!</button></Link>
-              <select 
-              className={style.selectBox}
-              onChange={(e) => handleChangeActivities(e)}>
+              <Link to="/createactivity">
+                {" "}
+                <button>Plan an activity</button>
+              </Link>
+              <select
+                className={style.selectBox}
+                onChange={(e) => handleChangeActivities(e)}
+              >
                 {activities.map((el) => (
                   <SelectButton el={el} key={el} />
                 ))}
               </select>
             </>
-          }
-          <button onClick={(e) => handleClickActivities(e)} className={style.searchBar}>{selected ? <Link to='/home/countries' className={style.link}>BACK TO COUNTRIES</Link>
-            : <Link to='/activities' className={style.link}>EXPLORE ACTIVITIES</Link>}</button>
+          )}
+          <button
+            onClick={(e) => handleClickActivities(e)}
+            className={style.searchBar}
+          >
+            {selected ? (
+              <Link to="/home/countries" className={style.link}>
+                BACK TO COUNTRIES
+              </Link>
+            ) : (
+              <Link to="/activities" className={style.link}>
+                EXPLORE ACTIVITIES
+              </Link>
+            )}
+          </button>
         </div>
       </div>
 
+      {!selected && <Countries currentCountries={currentCountries} />}
+      {selected && <Activities activity={activity} />}
+      <div className={style.paginationContainer}>
+        {!loading && !selected && (
+          <div className={style.paginationContainer}>
+            {totalPages &&
+              totalPages.map((p) => (
+                <button
+                  className= {(page === p ? style.active : style.btnPagination)}
+                  key={p}
+                  onClick={() => handleChangePage(p)}
+                >
+                  {p}
+                </button>
+              ))}
+          </div>
+        )}
+      </div>
+      <div className={style.paginationContainer}>
+      {!loading && !selected && (
+        <div style={{ display: "flex" }}>
+          {totalPagesMatch &&
+            totalPagesMatch.map((p) => (
+              <button
+                className= {(currentPage === p ? style.active : style.btnPagination)}
+                className={style.btnPagination}
+                key={p}
+                onClick={() => pagination(p)}
 
-      {!selected &&
-        <Countries currentCountries={currentCountries} />
-      }
-      {selected &&
-        <Activities activity={activity} />
-      }
-      {!loading && !selected && <div className={style.paginationContainer}>
-
-        {totalPages &&
-          totalPages.map((page) => (
-            <button className={style.btnPagination}
-            key={page} onClick={() => handleChangePage(page)}>
-              {page}
-            </button>
-          ))}
-
-      </div>}
-      {!loading && !selected && <div style={{ display: "flex" }}>
-        {totalPagesMatch &&
-          totalPagesMatch.map((page) => (
-            <button className={style.btnPagination}
-            key={page} onClick={() => pagination(page)}>
-              {page}
-            </button>
-          ))}
-      </div>}
+              >
+                {p}
+              </button>
+            ))}
+        </div>
+      )}
+      </div>
     </>
   );
 };

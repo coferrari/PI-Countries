@@ -1,57 +1,153 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
-import { clearCountryDetail, getCountryDetail } from '../../actions';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useHistory, Link } from "react-router-dom";
+import { clearCountryDetail, getCountryDetail } from "../../actions";
+import style from "./CountryDetails.module.css";
 
 const CountryDetails = () => {
-    const { alpha3code } = useParams();
-    const { loading, countryDetails } = useSelector(state => state)
-    const dispatch = useDispatch();
+  const { alpha3code } = useParams();
+  const { loading, countryDetails } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-    const history = useHistory();
+  const history = useHistory();
 
-    useEffect(() => {
-        dispatch(getCountryDetail(alpha3code))
-        return () => {
-            dispatch(clearCountryDetail())
-        }
-    }, []);
+  useEffect(() => {
+    dispatch(getCountryDetail(alpha3code));
+    return () => {
+      dispatch(clearCountryDetail());
+    };
+  }, []);
 
-    function handleClick() {
-        history.push(`/home/countries`);
+  const handleClick = () => {
+    history.push(`/home/countries`);
+  };
+
+  const format = (num) => {
+    num = num + "";
+    var str = "";
+    for (var i = num.length - 1, j = 1; i >= 0; i--, j++) {
+      if (j % 3 === 0 && i != 0) {
+        str += num[i] + ".";
+        continue;
+      }
+      str += num[i];
     }
-    // function handleClick() {
-    //     history.goBack();
-    // }
+    return str.split("").reverse().join("");
+  };
 
-    // validar solo en los que los datos puedan ser NULL, EL RESTO CREO QUE ES INNNECESARIO
+  return (
+    <>
+      <div className={style.container}>
+        {/* <button>add to fav</button> */}
+        <div className={style.loading}>
+          {loading && <div className={style.loader}></div>}
+        </div>
+        {countryDetails && countryDetails.name && (
+          <h2 className={style.countryTitle}>{countryDetails.name}</h2>
+        )}
+        <div className={style.detailsContainer}>
+          <div className={style.cards}>
+            {countryDetails && countryDetails.flag && (
+              <img
+                src={countryDetails.flag}
+                alt={countryDetails.name}
+                className={style.flag}
+              />
+            )}
+          </div>
 
-    return (
-        <>
-            {loading && <div></div>}
-            {countryDetails && <div>
-                {countryDetails.alpha3code && <h2>{countryDetails.alpha3Code}</h2>}
-                {countryDetails.name && <h3>{countryDetails.name}</h3>}
-                {countryDetails.flag && <img src={countryDetails.flag} height="300px" />}
+          <div className={style.cards}>
+            {countryDetails && (
+              <div>
                 <ul>
-                    {countryDetails.capital && <li>{countryDetails.capital}</li>}
-                    {countryDetails.region && <li>{countryDetails.region}</li>}
-                    {countryDetails.area && <li>{countryDetails.area / 1000}</li>}
-                    {countryDetails.population && <li>{countryDetails.population}</li>}
-                    {countryDetails.Activities && countryDetails.Activities.map(activity => (
-                        <div key={activity.id}>
-
-                        <li>{activity.name}</li>
-                        <li>{activity.duration}</li>
-                        <li>{activity.season}</li>
-                        <li>{activity.difficulty}</li>
-                        </div>
-                    ))}
+                  {countryDetails.alpha3Code && (
+                    <li className={style.items}>
+                      ALPHA-3:
+                      <span className={style.highlight}>
+                        {countryDetails.alpha3Code}
+                      </span>
+                    </li>
+                  )}
+                  {countryDetails.capital && (
+                    <li className={style.items}>
+                      Capital:{" "}
+                      <span className={style.highlight}>
+                        {countryDetails.capital}
+                      </span>
+                    </li>
+                  )}
+                  {countryDetails.region && (
+                    <li className={style.items}>
+                      Region:{" "}
+                      <span className={style.highlight}>
+                        {countryDetails.region}
+                      </span>
+                    </li>
+                  )}
+                  {countryDetails.subregion && (
+                    <li className={style.items}>
+                      Subregion:{" "}
+                      <span className={style.highlight}>
+                        {countryDetails.subregion}
+                      </span>
+                    </li>
+                  )}
+                  {countryDetails.area && (
+                    <li className={style.items}>
+                      Area:{" "}
+                      <span className={style.highlight}>
+                        {format(countryDetails.area)} km2
+                      </span>
+                    </li>
+                  )}
+                  {countryDetails.population !== 0 && (
+                    <li className={style.items}>
+                      Population:{" "}
+                      <span className={style.highlight}>
+                        {format(countryDetails.population) === 0 ? null : format(countryDetails.population)}
+                      </span>
+                    </li>
+                  )}
                 </ul>
-            </div>}
-            <button onClick={() => handleClick()}>Back to countries</button>
-        </>
-    );
-}
+              </div>
+            )}
+          </div>
+
+          <div className={style.cards}>
+            {!loading && countryDetails && (
+              <h3 className={style.subtitles}>Activities</h3>
+            )}
+            {countryDetails.Activities &&
+              countryDetails.Activities.map((activity) => (
+                <div key={activity.id}>
+                  <h4 className={style.items}>{activity.name}</h4>
+                  <Link to="/createactivity">
+                plan another activity in {countryDetails.name}
+              </Link>
+                </div>
+              ))}
+            {countryDetails.Activities &&
+              countryDetails.Activities.length === 0 && (
+                  <div>
+                <div className={style.items}>No planned activities</div>
+                {/* <Link to="/createactivity" className={style.linkPlan}>
+                plan an activity
+              </Link> */}
+              </div>
+              )}
+          </div>
+        </div>
+
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <button onClick={() => handleClick()}>Back to countries</button>
+      </div>
+    </>
+  );
+};
 
 export default CountryDetails;

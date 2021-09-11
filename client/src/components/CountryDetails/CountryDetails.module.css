@@ -1,0 +1,93 @@
+.container {
+    top: 120px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.loader {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid #293241;
+    width: 35px;
+    height: 35px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.detailsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    padding: 20px;
+    background-color:#f5f3f4;
+    box-shadow: 5px 5px #d3d3d3;
+}
+
+.flag {
+    width: 400px;
+    height: auto;
+}
+
+.countryTitle {
+    text-transform: uppercase;
+    font-size: 40px;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #293241;
+}
+
+.subtitles {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #293241;
+    text-transform: uppercase;
+    font-size: 28px;
+    /* color: white; */
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.items {
+    list-style-type: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400px;
+    color: #293241;
+    padding: 10px;
+    /* color: white; */
+}
+
+.highlight {
+    font-size: 20px;
+    padding-left: 8px;
+}
+
+.linkPlan {
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400px;
+    color: white;
+    background-color: tomato;
+    text-transform: uppercase;
+    margin-top: 20px;
+}

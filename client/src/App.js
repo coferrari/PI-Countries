@@ -9,7 +9,7 @@ import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
-    <div className={style.app, style.header}>
+    <div>
       <BrowserRouter>
         <Route exact path="/">
           <LandingPage />
@@ -28,6 +28,7 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/createactivity">
+            <NavBar />
             <ActivityCreate />
           </Route>
         </Switch>

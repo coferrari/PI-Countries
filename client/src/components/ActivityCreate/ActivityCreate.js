@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { getAllCountries, postActivities } from "../../actions/index";
+import style from "./ActivityCreate.module.css";
 
 function validate(input) {
   let errors = {};
@@ -30,7 +31,7 @@ const ActivityCreate = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    dispatch(getAllCountries())
+    dispatch(getAllCountries());
   }, []);
 
   function handleChange(e) {
@@ -128,91 +129,119 @@ const ActivityCreate = () => {
 
   return (
     <>
-      <Link to="/home/countries">
-        <button>Back to home</button>
-      </Link>
-      <h2>Create activity</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <label>Activity</label>
-          <input
-            type="text"
-            value={input.name}
-            name="name"
-            placeholder="Activity"
-            onChange={(e) => handleChange(e)}
-          ></input>
-          {errors.name && <p className="danger">{errors.name}</p>}
-        </div>
-        <div>
-          {seasons.map((season) => (
-            <div key={season}>
-              <label htmlFor={season}>{season}</label>
+      <div className={style.cointainerActivity}>
+        <div className={style.bgActivity}>
+          <Link to="/home/countries">
+            <button>Back to countries</button>
+          </Link>
+          <h2 className={style.titleActivity}>plan an activity</h2>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div className={style.sections}>
+              <label className={style.labels}>name</label>
               <input
-                type="radio"
-                value={season}
-                name="season"
-                onClick={(e) => handleRadio(e)}
+                className={style.inputName}
+                type="text"
+                value={input.name}
+                name="name"
+                placeholder="Activity"
+                onChange={(e) => handleChange(e)}
               ></input>
+              {errors.name && <p className="danger">{errors.name}</p>}
             </div>
-          ))}
-          {errors.season ? <p>{errors.season}</p> : null}
-        </div>
-        <div>
-          difficulty
-          <label htmlFor={input.value}></label>
-          <input
-            type="range"
-            min="1"
-            max="5"
-            step="1"
-            name="difficulty"
-            defaultValue="0"
-            onInput={(e) => handleRange(e)}
-          ></input>
-          {errors.difficulty ? <p>{errors.difficulty}</p> : null}
-          <p>{input.difficulty}</p>
-        </div>
-        <div>
-          duration
-          <label htmlFor={input.value}></label>
-          <input
-            type="range"
-            min="15"
-            max="180"
-            step="15"
-            name="duration"
-            defaultValue="0"
-            onInput={(e) => handleRangeDuration(e)}
-          ></input>
-          <p>{input.duration}</p>
-          {errors.duration ? <p>{errors.duration}</p> : null}
-        </div>
-        <select onChange={(e) => handleSelect(e)}>
-          <option>Select a country</option>
-          {countries?.map((country) => (
-            <option key={country.alpha3Code} value={country.alpha3Code}>
-              {country.name}
-            </option>
-          ))}
-        </select>
-        <ul>
-          {input.countryCode?.map((country) => (
-            <div key={country}>
-              <li>{country}</li>
-              <button onClick={() => handleRemove(country)}>X</button>
+            <div>
+              <h5 className={style.labels}>season</h5>
+              <div className={style.options}>
+                {seasons.map((season) => (
+                  <div key={season}>
+                    <label htmlFor={season} className={style.labelOptions}>
+                      {season}
+                      <input
+                        type="radio"
+                        value={season}
+                        name="season"
+                        onClick={(e) => handleRadio(e)}
+                      ></input>
+                    </label>
+                  </div>
+                ))}
+              </div>
+              {errors.season ? <p>{errors.season}</p> : null}
             </div>
-          ))}
-        </ul>
-        {errors.countryCode ? <p>{errors.countryCode}</p> : null}
-        {input.name &&
-          input.difficulty !== 0 &&
-          input.duration !== 0 &&
-          input.season &&
-          input.countryCode.length >= 1 && (
-            <button type="submit">Create activity!</button>
-          )}
-      </form>
+            <div className={style.btnGrid}>
+              <h5 className={style.labels}>difficulty</h5>
+              <div>
+                <label htmlFor={input.value}></label>
+                  <input
+                    className={style.range}
+                    type="range"
+                    min="1"
+                    max="5"
+                    step="1"
+                    name="difficulty"
+                    defaultValue="0"
+                    onInput={(e) => handleRange(e)}
+                  ></input>
+                
+              </div>
+              {errors.difficulty ? (
+                <p className={style.errors}>{errors.difficulty}</p>
+              ) : null}
+              <p className={style.labels}>{input.difficulty}</p>
+            </div>
+            <div className={style.btnGrid}>
+              <h5 className={style.labels}>duration</h5>
+              <div>
+                <label htmlFor={input.value}></label>
+                  <input
+                    className={style.range}
+                    type="range"
+                    min="15"
+                    max="180"
+                    step="15"
+                    name="duration"
+                    defaultValue="0"
+                    onInput={(e) => handleRangeDuration(e)}
+                  ></input>
+                
+              </div>
+              <p className={style.labels}>{input.duration}'</p>
+              {errors.duration ? <p>{errors.duration}</p> : null}
+            </div>
+            <div className={style.countrySelection}>
+            <div className={style.select}>
+            <select 
+            onChange={(e) => handleSelect(e)}>
+              <option>Select a country</option>
+              {countries?.map((country) => (
+                <option key={country.alpha3Code} value={country.alpha3Code}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
+            </div>
+            <div>
+
+            <ul>
+              {input.countryCode?.map((country) => (
+                <div key={country}>
+                  <li>{country}</li>
+                  <button onClick={() => handleRemove(country)}>X</button>
+                </div>
+              ))}
+            </ul>
+            </div>
+            {errors.countryCode ? <p>{errors.countryCode}</p> : null}
+            </div>
+            {input.name &&
+              input.difficulty !== 0 &&
+              input.duration !== 0 &&
+              input.season &&
+              input.countryCode.length >= 1 && (
+                <button type="submit">Create activity!</button>
+              )}
+          </form>
+        </div>
+      </div>
     </>
   );
 };
