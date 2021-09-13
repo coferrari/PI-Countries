@@ -39,8 +39,8 @@ const Activity = ({
 
         <div className={style.flagContainer}>
           {Countries?.map((country) => (
-            <div>
-              <ul key={country.name} className={style.activity}>
+            <div key={country.name}>
+              <ul className={style.activity}>
                 <li className={style.cardText}>{country.name}</li>
                 <Link
                   to={`/country/${country.alpha3Code}`}

@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    // return sequelize.define('activity', { // si no hago un return aca, va a ser undefined
     sequelize.define('Activity', {
         name: {
             type: DataTypes.STRING

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { clearCountryDetail, getCountryDetail } from "../../redux/actions";
 import style from "./CountryDetails.module.css";
 import back from "../../img/back.png";
@@ -17,7 +17,7 @@ const CountryDetails = () => {
     return () => {
       dispatch(clearCountryDetail());
     };
-  }, []);
+  }, [dispatch, alpha3code]); //warning
 
   const handleClick = () => {
     history.push(`/home/countries`);
@@ -27,7 +27,7 @@ const CountryDetails = () => {
     num = num + "";
     var str = "";
     for (var i = num.length - 1, j = 1; i >= 0; i--, j++) {
-      if (j % 3 === 0 && i != 0) {
+      if (j % 3 === 0 && i !== 0) {
         str += num[i] + ".";
         continue;
       }
@@ -136,7 +136,7 @@ const CountryDetails = () => {
         </div>
         <div>
           <button className={style.btnback} onClick={() => handleClick()}>
-            <img className={style.imgBtn} src={back} />
+            <img className={style.imgBtn} src={back} alt={back}/>
           </button>
         </div>
       </div>

@@ -33,7 +33,7 @@ const ActivityCreate = () => {
 
   useEffect(() => {
     dispatch(getAllCountries());
-  }, []);
+  }, [dispatch]);
 
   function handleChange(e) {
     setInput({

@@ -25,46 +25,43 @@ const Activities = ({ activity }) => {
 
   return (
     <>
-      {typeof allActivities === "string" && (
-        <div className={style.noAct}>{allActivities}</div>
-      )}
+      {typeof allActivities === "string" && <div className={style.noAct}>{allActivities}</div>}
       {!allActivities && !activities && activity === "All Activities" && (
         <div className={style.noAct}>No planned activities</div>
       )}
       <div className={style.activitiesContainer}>
-        {activity === "All Activities" &&
-          typeof allActivities !== "string" &&
-          allActivities &&
-          allActivities.map((activity) => (
-            <Activity
-              key={activity.key}
-              id={activity.id}
-              handleClose={handleClose}
-              name={activity.name}
-              difficulty={activity.difficulty}
-              duration={activity.duration}
-              season={activity.season}
-              Countries={activity.Countries}
-            />
-          ))}
-        {activity !== "All Activities" &&
-          typeof activities !== "string" &&
-          activities?.map((activity) => (
-            <Activity
-              key={activity.key}
-              id={activity.id}
-              handleClose={handleClose}
-              name={activity.name}
-              difficulty={activity.difficulty}
-              duration={activity.duration}
-              season={activity.season}
-              Countries={activity.Countries}
-            />
-          ))}
+      {activity === "All Activities" &&
+        typeof allActivities !== "string" &&
+        allActivities &&
+        allActivities.map((activity) => (
+          <Activity 
+            key={activity.id}
+            id={activity.id}
+            handleClose={handleClose}
+            name={activity.name}
+            difficulty={activity.difficulty}
+            duration={activity.duration}
+            season={activity.season}
+            Countries={activity.Countries}
+          />
+        ))}
+      {activity !== "All Activities" &&
+        typeof activities !== "string" &&
+        activities?.map((activity) => (
+          <Activity 
+            key={activity.id}
+            id={activity.id}
+            handleClose={handleClose}
+            name={activity.name}
+            difficulty={activity.difficulty}
+            duration={activity.duration}
+            season={activity.season}
+            Countries={activity.Countries}
+          />
+        ))}
       </div>
       {activity !== "All Activities" && !activities.length && (
-        <div className={style.noAct}>
-          No activities planned for this {activity.toLowerCase()}
+        <div className={style.noAct}>No activities planned for this {activity.toLowerCase()}
         </div>
       )}
     </>

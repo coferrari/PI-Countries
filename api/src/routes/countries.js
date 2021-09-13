@@ -54,7 +54,6 @@ router.get('/:page', async (req, res) => {
 router.get('/search/country', async (req, res) => {
     const { name } = req.query;
     try {
-        const size = 10
         const country = await Country.findAndCountAll({
             where: {
                 name: {
@@ -169,50 +168,6 @@ router.get('/order/:order/:page', async (req, res) => {
         res.send(error)
     }
 });
-
-// router.get('/region/:region/:page', async (req, res) => {
-//     let { region, page } = req.params;
-//     const pageNumber = parseInt(page);
-//     region = region.slice(0, 1).toUpperCase().concat(region.slice(1).toLowerCase())
-//     try {
-//         if (pageNumber === 0) {
-//             const size = 9;
-//             const countriesByRegion = await Country.findAndCountAll({
-//                 where: {
-//                     region: region
-//                 },
-//                 limit: size,
-//                 offset: (pageNumber * size),
-//                 order: [
-//                     ['name', 'ASC']
-//                 ]
-//             })
-//             if (!countriesByRegion.count) {
-//                 res.send('Region not found')
-//             }
-//             res.send(countriesByRegion)
-//         }
-//         if (pageNumber >= 1) {
-//             const size = 10;
-//             const countriesByRegion = await Country.findAndCountAll({
-//                 where: {
-//                     region: region
-//                 },
-//                 limit: size,
-//                 offset: (pageNumber * size) - 1,
-//                 order: [
-//                     ['name', 'ASC']
-//                 ]
-//             })
-//             if (!countriesByRegion.count) {
-//                 res.send('Region not found')
-//             }
-//             res.send(countriesByRegion)
-//         }
-//     } catch (error) {
-//         res.send(error)
-//     }
-// });
 
 router.get('/region/:region/:order/:page', async (req, res) => {
     let { region, order, page } = req.params

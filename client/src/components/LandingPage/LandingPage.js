@@ -7,7 +7,7 @@ const LandingPage = () => {
   return (
     <>
       <div className={style.bgImg}>
-        <img src={world} className={style.imgSize}/>
+        <img src={world} className={style.imgSize} alt={world}/>
       </div>
       <div className={style.background}>
         <NavLink to="/home/countries" className={style.link}>
