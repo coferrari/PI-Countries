@@ -1,0 +1,71 @@
+.container {
+    background-color: #f5f3f4;
+    width: 300px;
+    height: auto;
+    margin: 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+}
+
+.flag {
+    width: 70%;
+    max-height: 200px;
+    padding: 10px;
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.containerBtn {
+    display: flex;
+    justify-content: right;
+    letter-spacing: 1px;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400px;
+}
+
+.btnClose {
+    background-color: #293241;
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.btnClose:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.activity {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #293241;
+    margin: 0;
+    padding: 0;
+}
+
+.cardText {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cardSubtitle {
+    padding: 25px;
+}
+
+.cardList {
+    font-size: 16px;
+    padding: 5px 0px;
+}
+
+.cardHighlight {
+    font-size: 18px;
+}

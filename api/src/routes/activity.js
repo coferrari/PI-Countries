@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
       },
     });
     if (!activities.length) {
-      res.send("No activities found");
+      res.send("No activities planned");
     } else {
       res.send(activities);
     }

@@ -73,13 +73,13 @@ const Home = () => {
   const handleChangeFilter = (e) => {
     e.preventDefault();
     setFilter(e.target.value);
-    setPage(1)
+    setPage(1);
   };
 
   const handleChangeOrder = (e) => {
     e.preventDefault();
     setOrder(e.target.value.replace(/ /g, ""));
-    setPage(1)
+    setPage(1);
   };
 
   const handleClickActivities = (e) => {
@@ -132,7 +132,7 @@ const Home = () => {
               ></input>
             </>
           )}
-          {country && (
+          {country && !selected && (
             <button
               className={style.btnSearch}
               type="submit"
@@ -169,32 +169,35 @@ const Home = () => {
             </>
           )}
           {selected && (
-            <>
-              <Link to="/createactivity">
-                {" "}
-                <button>Plan an activity</button>
+            <div className={style.cntPlan}>
+            
+              <Link to="/createactivity" className={style.btnPlan}>
+                <button className={style.planStyle}>Plan an activity</button>
               </Link>
-              <select
-                className={style.selectBox}
-                onChange={(e) => handleChangeActivities(e)}
-              >
-                {activities.map((el) => (
-                  <SelectButton el={el} key={el} />
-                ))}
-              </select>
-            </>
+            </div>
           )}
+          {selected && (
+            <select
+              className={style.selectBox}
+              onChange={(e) => handleChangeActivities(e)}
+            >
+              {activities.map((el) => (
+                <SelectButton el={el} key={el} />
+              ))}
+            </select>
+          )}
+
           <button
             onClick={(e) => handleClickActivities(e)}
             className={style.searchBar}
           >
             {selected ? (
-              <Link to="/home/countries" className={style.link}>
-                BACK TO COUNTRIES
+              <Link to="/home/countries" className={style.btnChange}>
+                back to countries
               </Link>
             ) : (
-              <Link to="/activities" className={style.link}>
-                EXPLORE ACTIVITIES
+              <Link to="/activities" className={style.btnChange}>
+                explore activities
               </Link>
             )}
           </button>
@@ -209,7 +212,7 @@ const Home = () => {
             {totalPages &&
               totalPages.map((p) => (
                 <button
-                  className= {(page === p ? style.active : style.btnPagination)}
+                  className={page === p ? style.active : style.btnPagination}
                   key={p}
                   onClick={() => handleChangePage(p)}
                 >
@@ -220,22 +223,22 @@ const Home = () => {
         )}
       </div>
       <div className={style.paginationContainer}>
-      {!loading && !selected && (
-        <div style={{ display: "flex" }}>
-          {totalPagesMatch &&
-            totalPagesMatch.map((p) => (
-              <button
-                className= {(currentPage === p ? style.active : style.btnPagination)}
-                className={style.btnPagination}
-                key={p}
-                onClick={() => pagination(p)}
-
-              >
-                {p}
-              </button>
-            ))}
-        </div>
-      )}
+        {!loading && !selected && (
+          <div style={{ display: "flex" }}>
+            {totalPagesMatch &&
+              totalPagesMatch.map((p) => (
+                <button
+                  className={
+                    currentPage === p ? style.active : style.btnPagination
+                  }
+                  key={p}
+                  onClick={() => pagination(p)}
+                >
+                  {p}
+                </button>
+              ))}
+          </div>
+        )}
       </div>
     </>
   );

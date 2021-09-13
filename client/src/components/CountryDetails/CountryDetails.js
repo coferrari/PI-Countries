@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { clearCountryDetail, getCountryDetail } from "../../actions";
 import style from "./CountryDetails.module.css";
+import back from "../../img/back.png";
 
 const CountryDetails = () => {
   const { alpha3code } = useParams();
@@ -37,11 +38,11 @@ const CountryDetails = () => {
 
   return (
     <>
+      <div className={style.loading}>
+        {loading && <div className={style.loader}></div>}
+      </div>
+      {!loading && 
       <div className={style.container}>
-        {/* <button>add to fav</button> */}
-        <div className={style.loading}>
-          {loading && <div className={style.loader}></div>}
-        </div>
         {countryDetails && countryDetails.name && (
           <h2 className={style.countryTitle}>{countryDetails.name}</h2>
         )}
@@ -100,11 +101,13 @@ const CountryDetails = () => {
                       </span>
                     </li>
                   )}
-                  {countryDetails.population !== 0 && (
+                  {countryDetails.population && (
                     <li className={style.items}>
                       Population:{" "}
                       <span className={style.highlight}>
-                        {format(countryDetails.population) === 0 ? null : format(countryDetails.population)}
+                        {format(countryDetails.population) === 0
+                          ? null
+                          : format(countryDetails.population)}
                       </span>
                     </li>
                   )}
@@ -122,30 +125,28 @@ const CountryDetails = () => {
                 <div key={activity.id}>
                   <h4 className={style.items}>{activity.name}</h4>
                   <Link to="/createactivity">
-                plan another activity in {countryDetails.name}
-              </Link>
+                    plan another activity in {countryDetails.name}
+                  </Link>
                 </div>
               ))}
             {countryDetails.Activities &&
               countryDetails.Activities.length === 0 && (
-                  <div>
-                <div className={style.items}>No planned activities</div>
-                {/* <Link to="/createactivity" className={style.linkPlan}>
+                <div>
+                  <div className={style.items}>No planned activities</div>
+                  {/* <Link to="/createactivity" className={style.linkPlan}>
                 plan an activity
               </Link> */}
-              </div>
+                </div>
               )}
           </div>
         </div>
-
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <button onClick={() => handleClick()}>Back to countries</button>
+        <div>
+          <button className={style.btnback} onClick={() => handleClick()}>
+            <img className={style.imgBtn} src={back} />
+          </button>
+        </div>
       </div>
+    }
     </>
   );
 };

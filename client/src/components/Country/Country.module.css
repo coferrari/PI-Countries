@@ -16,8 +16,7 @@
 .container:hover {
     transform: scale(1.03);
     opacity: .95;
-    transition: all 250ms ease-in-out 0s;
-    
+    transition: all 250ms ease-in-out 0s;  
 }
 
 .flag {
@@ -33,7 +32,7 @@
 }
 
 .cardText {
-    top: 50%;
+    top: 40%;
     padding: 10px;
     padding-bottom: 0px;
     color: white;
@@ -43,5 +42,6 @@
 .cardTitle {
     font-size: 18px;
 }
+
 
 

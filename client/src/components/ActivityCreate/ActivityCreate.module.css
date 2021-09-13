@@ -7,11 +7,11 @@
 
 .bgActivity {
     align-self: center;
-    background-color:#3d5a80;
+    background-color:#f5f3f4;
     position: relative;
     top: 130px;
     padding: 40px;
-    box-shadow: 5px 5px #293241;
+    box-shadow: 5px 5px #d3d3d3;
 }
 .inputName {
     border: none;
@@ -23,6 +23,7 @@
     letter-spacing: 1px;
     font-family: 'Helvetica', sans-serif;
     font-weight: 400px;
+    color: #293241; 
 }
 
 .titleActivity {
@@ -31,7 +32,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     text-transform: uppercase;
-    color: white;
+    color: #293241;
     justify-self: center;
 }
 
@@ -40,14 +41,15 @@
 }
 
 .labels {
-    color: white;
+    color: #293241;
     font-family: 'Montserrat', sans-serif;
     font-weight: 200;
     font-size: 24px;
     text-transform: lowercase;
-    padding: 0px 20px 0px 0px;
+    /* padding: 0px 20px 0px 0px; */
     left: 0px;
     display: inline-block;
+    margin: 30px;
 }
 
 .options {
@@ -59,7 +61,7 @@
     font-family: 'Helvetica', sans-serif;
     font-weight: 400px;
     text-transform: uppercase;
-    color: white;
+    color: #1a659e;
 }
 
 .sections {
@@ -76,19 +78,29 @@
     justify-items: center;
     align-items: center;
     max-height: 70px;
+    padding: 20px 0px;
 }
 
 .errors {
-    color: red;
+    color: #ae2012;
     position: absolute;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400px;
+    margin: 20px;
 }
 
 .labelOptions {
-    padding: 20px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.radio {
+    margin-right: 20px
 }
 
 .countrySelection {
-    padding: 50px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -97,4 +109,74 @@
 
 .select {
     width: 80%;
+    padding: 10px;
+    font-family: "Helvetica", sans-serif;
+    font-weight: 400px;
+    border: none;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btnback {
+    border: none;
+    cursor: pointer;
+    justify-self: left;
+    background-color: #f5f3f4;
+    margin: 15px;
+}
+
+.imgBtn {
+    height: 25px;
+}
+
+.containerBtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnCreate {
+    background-color: #293241;
+    border: none;
+    font-size: 18px;
+    padding: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.countriesSelected {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    font-family: "Helvetica", sans-serif;
+    font-weight: 400px;
+    font-weight: 400;
+}
+
+.list {
+    padding: 10px;
+    list-style-type: none;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-transform: uppercase;
+    border: 1px solid #293241;
+}
+
+.btnClose {
+    background-color: #293241;
+    border: none;
+    color: white;
+    padding: none;
+    margin: none;
 }

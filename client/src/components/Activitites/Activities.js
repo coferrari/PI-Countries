@@ -5,8 +5,10 @@ import {
   getActivities,
   filterActivities,
 } from "../../actions/index";
+import Activity from "../Activity/Activity";
+import style from "./Activities.module.css";
 
-const Activity = ({ activity }) => {
+const Activities = ({ activity }) => {
   const { activities, allActivities } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -23,64 +25,49 @@ const Activity = ({ activity }) => {
 
   return (
     <>
-      //put para modificar la actividad
-      {typeof allActivities === "string" && <div>{allActivities}</div>}
+      {/* //put para modificar la actividad */}
+      {typeof allActivities === "string" && <div className={style.noAct}>{allActivities}</div>}
       {!allActivities && !activities && activity === "All Activities" && (
-        <div>No planned activities</div>
+        <div className={style.noAct}>No planned activities</div>
       )}
+      <div className={style.activitiesContainer}>
       {activity === "All Activities" &&
         typeof allActivities !== "string" &&
         allActivities &&
         allActivities.map((activity) => (
-          <div key={activity.id}>
-            <button onClick={() => handleClose(activity.id)}>Remove</button>
-            <div>
-              <h2>{activity.name}</h2>
-              {activity.Countries?.map((country) => (
-                <div>
-                  <img src={country.flag} alt={country.name} flag />
-                  <ul key={country.name}>
-                    <li>{country.name}</li>
-                  </ul>
-                </div>
-              ))}
-              <ul>
-                <li>{activity.difficulty}</li>
-                <li>{activity.duration}</li>
-                <li>{activity.season}</li>
-              </ul>
-            </div>
-          </div>
+          <Activity 
+            key={activity.key}
+            id={activity.id}
+            handleClose={handleClose}
+            name={activity.name}
+            difficulty={activity.difficulty}
+            duration={activity.duration}
+            season={activity.season}
+            Countries={activity.Countries}
+          />
         ))}
       {activity !== "All Activities" &&
         typeof activities !== "string" &&
         activities?.map((activity) => (
-          <div key={activity.id}>
-            <button onClick={() => handleClose(activity.id)}>Remove</button>
-            <div>
-            <h2>{activity.name}</h2>
-            <ul>
-                <li>{activity.difficulty}</li>
-                <li>{activity.duration}</li>
-                <li>{activity.season}</li>
-              </ul>
-              {activity.Countries?.map((country) => (
-                <div>
-                  <img src={country.flag} alt={country.name} flag />
-                  <ul key={country.name}>
-                    <li>{country.name}</li>
-                  </ul>
-                </div>
-              ))}
-
-            </div>
-          </div>
+          <Activity 
+            key={activity.key}
+            id={activity.id}
+            handleClose={handleClose}
+            name={activity.name}
+            difficulty={activity.difficulty}
+            duration={activity.duration}
+            season={activity.season}
+            Countries={activity.Countries}
+          />
         ))}
-      {activity !== "All Activities" && !activities && (
-        <div>No activities planned for this {activity.toLowerCase()} :(</div>
+
+      </div>
+      {activity !== "All Activities" && !activities.length && (
+        <div className={style.noAct}>No activities planned for this {activity.toLowerCase()}
+        </div>
       )}
     </>
   );
 };
 
-export default Activity;
+export default Activities;

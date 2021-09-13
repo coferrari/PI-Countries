@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { getAllCountries, postActivities } from "../../actions/index";
 import style from "./ActivityCreate.module.css";
+import back from "../../img/back.png";
 
 function validate(input) {
   let errors = {};
@@ -132,9 +133,13 @@ const ActivityCreate = () => {
       <div className={style.cointainerActivity}>
         <div className={style.bgActivity}>
           <Link to="/home/countries">
-            <button>Back to countries</button>
+            <button className={style.btnback}>
+              <img src={back} alt="img back" className={style.imgBtn} />
+            </button>
           </Link>
-          <h2 className={style.titleActivity}>plan an activity</h2>
+          <div className={style.countrySelection}>
+            <h2 className={style.titleActivity}>plan an activity</h2>
+          </div>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className={style.sections}>
               <label className={style.labels}>name</label>
@@ -146,7 +151,7 @@ const ActivityCreate = () => {
                 placeholder="Activity"
                 onChange={(e) => handleChange(e)}
               ></input>
-              {errors.name && <p className="danger">{errors.name}</p>}
+              {errors.name && <p className={style.errors}>{errors.name}</p>}
             </div>
             <div>
               <h5 className={style.labels}>season</h5>
@@ -160,28 +165,30 @@ const ActivityCreate = () => {
                         value={season}
                         name="season"
                         onClick={(e) => handleRadio(e)}
+                        className={style.radio}
                       ></input>
                     </label>
                   </div>
                 ))}
               </div>
-              {errors.season ? <p>{errors.season}</p> : null}
+              {errors.season ? (
+                <p className={style.errors}>{errors.season}</p>
+              ) : null}
             </div>
             <div className={style.btnGrid}>
               <h5 className={style.labels}>difficulty</h5>
               <div>
                 <label htmlFor={input.value}></label>
-                  <input
-                    className={style.range}
-                    type="range"
-                    min="1"
-                    max="5"
-                    step="1"
-                    name="difficulty"
-                    defaultValue="0"
-                    onInput={(e) => handleRange(e)}
-                  ></input>
-                
+                <input
+                  className={style.range}
+                  type="range"
+                  min="1"
+                  max="5"
+                  step="1"
+                  name="difficulty"
+                  defaultValue="0"
+                  onInput={(e) => handleRange(e)}
+                ></input>
               </div>
               {errors.difficulty ? (
                 <p className={style.errors}>{errors.difficulty}</p>
@@ -192,53 +199,66 @@ const ActivityCreate = () => {
               <h5 className={style.labels}>duration</h5>
               <div>
                 <label htmlFor={input.value}></label>
-                  <input
-                    className={style.range}
-                    type="range"
-                    min="15"
-                    max="180"
-                    step="15"
-                    name="duration"
-                    defaultValue="0"
-                    onInput={(e) => handleRangeDuration(e)}
-                  ></input>
-                
+                <input
+                  className={style.range}
+                  type="range"
+                  min="15"
+                  max="180"
+                  step="15"
+                  name="duration"
+                  defaultValue="0"
+                  onInput={(e) => handleRangeDuration(e)}
+                ></input>
               </div>
               <p className={style.labels}>{input.duration}'</p>
-              {errors.duration ? <p>{errors.duration}</p> : null}
+              {errors.duration ? (
+                <p className={style.errors}>{errors.duration}</p>
+              ) : null}
             </div>
             <div className={style.countrySelection}>
-            <div className={style.select}>
-            <select 
-            onChange={(e) => handleSelect(e)}>
-              <option>Select a country</option>
-              {countries?.map((country) => (
-                <option key={country.alpha3Code} value={country.alpha3Code}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-            </div>
-            <div>
+              <h5 className={style.labels}>country</h5>
+              <div className={style.select}>
+                <select onChange={(e) => handleSelect(e)}>
+                  <option>Select a country</option>
+                  {countries?.map((country) => (
+                    <option key={country.alpha3Code} value={country.alpha3Code}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <ul>
-              {input.countryCode?.map((country) => (
-                <div key={country}>
-                  <li>{country}</li>
-                  <button onClick={() => handleRemove(country)}>X</button>
-                </div>
-              ))}
-            </ul>
+              <div className={style.countrySelection}>
+                <ul>
+                  {input.countryCode?.map((country) => (
+                    <div key={country} className={style.countriesSelected}>
+                      <li className={style.list}>{country}</li>
+                      <button
+                        onClick={() => handleRemove(country)}
+                        className={style.btnClose}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </ul>
+              </div>
+              {errors.countryCode ? (
+                <p className={style.errors}>{errors.countryCode}</p>
+              ) : null}
             </div>
-            {errors.countryCode ? <p>{errors.countryCode}</p> : null}
+
+            <div className={style.containerBtn}>
+              {input.name &&
+                input.difficulty !== 0 &&
+                input.duration !== 0 &&
+                input.season &&
+                input.countryCode.length >= 1 && (
+                  <button type="submit" className={style.btnCreate}>
+                    Create activity!
+                  </button>
+                )}
             </div>
-            {input.name &&
-              input.difficulty !== 0 &&
-              input.duration !== 0 &&
-              input.season &&
-              input.countryCode.length >= 1 && (
-                <button type="submit">Create activity!</button>
-              )}
           </form>
         </div>
       </div>

@@ -8,7 +8,10 @@
 }
 
 .loading {
+    top: 150px;
+    position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -87,7 +90,18 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 400px;
     color: white;
-    background-color: tomato;
     text-transform: uppercase;
     margin-top: 20px;
+}
+
+.btnback {
+    border: none;
+    cursor: pointer;
+    justify-self: left;
+    margin: 40px;
+    background-color: white;
+}
+
+.imgBtn {
+    height: 30px;
 }

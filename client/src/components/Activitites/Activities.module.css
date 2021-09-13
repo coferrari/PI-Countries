@@ -1,14 +1,14 @@
-.countriesContainer {
-    top: 150px;
+.activitiesContainer {
+    top: 180px;
     bottom: 100px;
     position: relative;
-    padding: 0px 20px;
+    padding: 0px 100px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto; 
 }
 
-.noMatch {
+.noAct {
     display: flex;
     position: relative;
     top: 250px;

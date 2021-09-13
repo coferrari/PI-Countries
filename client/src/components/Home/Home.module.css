@@ -3,7 +3,8 @@
   left: 0;
   width: 100%;
   position: fixed;
-  background-color: #3d5a80;
+  background: rgb(41,50,65);
+  background: linear-gradient(180deg, rgba(41,50,65,1) 23%, rgba(52,63,83,1) 85%);
   padding: 5px;
   display: flex;
   justify-content: space-evenly;
@@ -13,16 +14,15 @@
 .searchBar {
   border: none;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 12px;
   width: 220px;
   padding: 10px;
-  letter-spacing: 1px;
-  font-family: "Helvetica", sans-serif;
+  letter-spacing: 2px;
+  font-family: "Montserrat", sans-serif;
   font-weight: 400px;
-  background-color: #3d5a80;
-  opacity: 0.5;
+  background-color: transparent;
   color: white;
-  border: 1px solid white;
+  cursor: pointer;
 }
 
 ::placeholder {
@@ -33,19 +33,16 @@
 .selectBox {
   width: 220px;
   padding: 10px;
-  font-family: "Helvetica", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 400px;
   border: none;
   font-weight: 400;
-  background-color: #3d5a80;
-  font-size: 14px;
-  letter-spacing: 1px;
+  background-color: transparent;
+  font-size: 12px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: white;
-}
-
-.link {
-  text-decoration: none;
+  cursor: pointer;
 }
 
 .paginationContainer {
@@ -61,9 +58,9 @@
 }
 .btnPagination {
   border: none;
-  font-size: 18px;
-  font-family: "Helvetica", sans-serif;
-  font-weight: 400;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
   cursor: pointer;
   top: 200px;
   position: relative;
@@ -75,17 +72,17 @@
 
 .btnPagination:hover {
   font-weight: 600;
-  background-color: #3d5a80;
+  background-color: #293241;
   color: white;
 }
 
 .active {
-    font-weight: 600;
-    background-color: #3d5a80;
+    font-weight: 300;
+    background-color: #293241;
     color: white;
     border: none;
-    font-size: 18px;
-    font-family: "Helvetica", sans-serif;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
     cursor: pointer;
     top: 200px;
     position: relative;
@@ -94,13 +91,53 @@
 }
 
 .btnSearch {
-  background-color: #3d5a80;
+  background-color: transparent;
   border: none;
   font-size: 18px;
   padding: 0px 10px;
   font-family: "Montserrat", sans-serif;
-  font-weight: 300;
+  font-weight: 200;
   color: white;
   text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btnChange {
+  background-color: #293241;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.cntPlan {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnPlan {
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  bottom: 0px;
+  justify-content: center;
+}
+
+.planStyle {
+  background-color: white;
+  padding: 10px;
+  color: #293241;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: none;
   cursor: pointer;
 }
