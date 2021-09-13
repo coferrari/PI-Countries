@@ -46,7 +46,6 @@
     font-weight: 200;
     font-size: 24px;
     text-transform: lowercase;
-    /* padding: 0px 20px 0px 0px; */
     left: 0px;
     display: inline-block;
     margin: 30px;
@@ -88,7 +87,9 @@
     letter-spacing: 1px;
     font-family: 'Helvetica', sans-serif;
     font-weight: 400px;
-    margin: 20px;
+    margin: -45px 60px 0px 0px;
+    padding: 0px;
+    right: 0;
 }
 
 .labelOptions {
@@ -127,6 +128,7 @@
     justify-self: left;
     background-color: #f5f3f4;
     margin: 15px;
+    position: absolute;
 }
 
 .imgBtn {

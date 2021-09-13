@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory, Link } from "react-router-dom";
-import { clearCountryDetail, getCountryDetail } from "../../actions";
+import { clearCountryDetail, getCountryDetail } from "../../redux/actions";
 import style from "./CountryDetails.module.css";
 import back from "../../img/back.png";
 
@@ -124,18 +124,12 @@ const CountryDetails = () => {
               countryDetails.Activities.map((activity) => (
                 <div key={activity.id}>
                   <h4 className={style.items}>{activity.name}</h4>
-                  <Link to="/createactivity">
-                    plan another activity in {countryDetails.name}
-                  </Link>
                 </div>
               ))}
             {countryDetails.Activities &&
               countryDetails.Activities.length === 0 && (
                 <div>
                   <div className={style.items}>No planned activities</div>
-                  {/* <Link to="/createactivity" className={style.linkPlan}>
-                plan an activity
-              </Link> */}
                 </div>
               )}
           </div>

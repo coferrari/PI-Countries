@@ -53,7 +53,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         countryDetails: [],
-        countriesMatch: [], //
+        countriesMatch: []
       };
     case SEARCH_COUNTRIES_REQUEST:
       return {
@@ -130,8 +130,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
           loading: false,
           activities: [],
           allActivities: []
-          // activities: payload,
-          // allActivities: payload
         };
       }
     case REMOVE_ACTIVITY:

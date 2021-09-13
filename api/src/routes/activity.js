@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     const activities = await Activity.findAll({
       include: {
         model: Country,
-        attributes: ["name", "flag"],
+        attributes: ["name", "flag", "alpha3Code"],
         through: {
           attributes: [],
         },

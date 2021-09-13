@@ -1,19 +1,11 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Country from "../Country/Country";
-import { clearCountryDetail } from "../../actions/index";
 import style from "./Countries.module.css";
 
 const Countries = ({ currentCountries }) => {
   const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  // no se por que lo puse aca ????????
-  //    useEffect(() => {
-  //     return () => {
-  //         dispatch(clearCountryDetail())
-  //     }
-  // }, []);
-  // ver tema de error, sino sacar del estado
+
   return (
     <>
       {state.loading && <div>Loading...</div>}
@@ -50,7 +42,7 @@ const Countries = ({ currentCountries }) => {
         {!state.loading &&
           !state.currentCountries &&
           typeof state.countriesMatch === "string" && (
-            <div >{state.countriesMatch}</div>
+            <div>{state.countriesMatch}</div>
           )}
       </div>
     </>

@@ -3,11 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import SelectButton from "../SelectButton/SelectButton";
 import {
   orderCountries,
-  getActivities,
-  filterActivities,
   searchCountries,
   orderCountriesFiltered,
-} from "../../actions/";
+} from "../../redux/actions";
 import Countries from "../Countries/Countries";
 import Activities from "../Activitites/Activities";
 import { Link } from "react-router-dom";
@@ -15,7 +13,6 @@ import style from "./Home.module.css";
 import searchIcon from "../../img/searchicon.svg";
 
 const Home = () => {
-  // ver de acomodar todo dentro de un objeto
   const [filter, setFilter] = useState("All Countries");
   const [order, setOrder] = useState("AtoZ");
   const [country, setCountry] = useState("");
@@ -170,7 +167,6 @@ const Home = () => {
           )}
           {selected && (
             <div className={style.cntPlan}>
-            
               <Link to="/createactivity" className={style.btnPlan}>
                 <button className={style.planStyle}>Plan an activity</button>
               </Link>

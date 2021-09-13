@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import style from "./Country.module.css";
 
-// const Country = ({name, flag, region, key}) => {
 const Country = ({ alpha3Code, name, flag, region, capital }) => {
   return (
     <Link to={`/country/${alpha3Code}`} className={style.cardLink}>

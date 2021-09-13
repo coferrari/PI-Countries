@@ -12,6 +12,12 @@
     flex-direction: column;
 }
 
+.titleActivity {
+    padding: 20px;
+    justify-content: center;
+    height: 40px;
+}
+
 .flag {
     width: 70%;
     max-height: 200px;
@@ -28,12 +34,23 @@
     font-weight: 400px;
 }
 
+.flagContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #293241;
+    margin: 0;
+    padding: 0;
+}
+
 .btnClose {
     background-color: #293241;
     border: none;
     color: white;
     font-size: 14px;
     padding: 5px 10px;
+    margin-right: 0;
 }
 
 .btnClose:hover {
@@ -48,7 +65,15 @@
     align-items: center;
     color: #293241;
     margin: 0;
-    padding: 0;
+    padding: 0px 20px 20px 20px;
+}
+
+.flagC {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 
 .cardText {

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import style from "./Activity.module.css";
 
 const Activity = ({
@@ -18,31 +19,42 @@ const Activity = ({
         </button>
       </div>
       <div className={style.activity}>
-        <h2>{name}</h2>
+        <div className={style.activity}>
+          <h2 className={style.titleActivity}>{name}</h2>
+        </div>
         <div className={style.cardSubtitle}>details:</div>
         <ul className={style.cardText}>
-          <li className={style.cardList}>season: <span className={style.cardHighlight}>{season}</span></li>
-          <li className={style.cardList}>difficulty: <span className={style.cardHighlight}>{difficulty}</span></li>
-          <li className={style.cardList}>duration: <span className={style.cardHighlight}>{duration}</span></li>
+          <li className={style.cardList}>
+            season: <span className={style.cardHighlight}>{season}</span>
+          </li>
+          <li className={style.cardList}>
+            difficulty:{" "}
+            <span className={style.cardHighlight}>{difficulty}</span>
+          </li>
+          <li className={style.cardList}>
+            duration: <span className={style.cardHighlight}>{duration}'</span>
+          </li>
         </ul>
         <div className={style.cardSubtitle}>where?</div>
-        
-        
-        
-        <div className={style.activity}>
 
-        {Countries?.map((country) => (
-          <div>
-            <ul key={country.name} className={style.activity}>
-              <li className={style.cardText}>{country.name}</li>
-              <img
-                src={country.flag}
-                alt={`${country.name} flag`}
-                className={style.flag}
-              />
-            </ul>
-          </div>
-        ))}
+        <div className={style.flagContainer}>
+          {Countries?.map((country) => (
+            <div>
+              <ul key={country.name} className={style.activity}>
+                <li className={style.cardText}>{country.name}</li>
+                <Link
+                  to={`/country/${country.alpha3Code}`}
+                  className={style.flagC}
+                >
+                  <img
+                    src={country.flag}
+                    alt={`${country.name} flag`}
+                    className={style.flag}
+                  />
+                </Link>
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </div>

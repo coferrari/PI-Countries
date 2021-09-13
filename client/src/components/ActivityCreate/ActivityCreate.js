@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { getAllCountries, postActivities } from "../../actions/index";
+import { getAllCountries, postActivities } from "../../redux/actions/index";
 import style from "./ActivityCreate.module.css";
 import back from "../../img/back.png";
 
@@ -155,6 +155,9 @@ const ActivityCreate = () => {
             </div>
             <div>
               <h5 className={style.labels}>season</h5>
+              {errors.season ? (
+                <p className={style.errors}>{errors.season}</p>
+              ) : null}
               <div className={style.options}>
                 {seasons.map((season) => (
                   <div key={season}>
@@ -171,9 +174,6 @@ const ActivityCreate = () => {
                   </div>
                 ))}
               </div>
-              {errors.season ? (
-                <p className={style.errors}>{errors.season}</p>
-              ) : null}
             </div>
             <div className={style.btnGrid}>
               <h5 className={style.labels}>difficulty</h5>

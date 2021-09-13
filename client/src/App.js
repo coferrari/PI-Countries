@@ -4,7 +4,6 @@ import NavBar from "./components/NavBar/NavBar";
 import CountryDetails from "./components/CountryDetails/CountryDetails";
 import Home from "./components/Home/Home";
 import ActivityCreate from "./components/ActivityCreate/ActivityCreate";
-import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -31,7 +30,6 @@ function App() {
             <ActivityCreate />
           </Route>
         </Switch>
-        <Footer />
       </BrowserRouter>
     </div>
   );
