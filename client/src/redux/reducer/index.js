@@ -3,11 +3,8 @@ import {
   REQUEST_LOADING,
   GET_COUNTRY_DETAIL_SUCCESS,
   CLEAR_COUNTRY_DETAIL,
-  SEARCH_COUNTRIES_REQUEST,
   SEARCH_COUNTRIES_SUCCESS,
   GET_ACTIVITIES,
-  ADD_COUNTRY_FAV,
-  REMOVE_COUNTRY_FAV,
   FILTER_ACTIVITIES,
   ORDER_COUNTRIES,
   ORDER_FILTERED_COUNTRIES,
@@ -19,7 +16,6 @@ const initialState = {
   loading: false,
   countries: [],
   countCountries: 0,
-  countriesFav: [],
   countryDetails: {},
   activities: [],
   allActivities: [],
@@ -55,11 +51,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         countryDetails: [],
         countriesMatch: []
       };
-    case SEARCH_COUNTRIES_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
     case SEARCH_COUNTRIES_SUCCESS:
       return {
         ...state,
@@ -68,18 +59,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         loading: false,
         countriesMatch: payload.rows,
         countCountriesMatch: payload.count,
-      };
-    case ADD_COUNTRY_FAV:
-      return {
-        ...state,
-        countriesFav: [...state.countriesFav, payload],
-      };
-    case REMOVE_COUNTRY_FAV:
-      return {
-        ...state,
-        countriesFav: state.countriesFav.filter(
-          (country) => country.alpha3code !== payload
-        ),
       };
     case ORDER_COUNTRIES:
       return {

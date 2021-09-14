@@ -7,8 +7,6 @@ import {
   SEARCH_COUNTRIES_SUCCESS,
   GET_ACTIVITIES,
   POST_ACTIVITY,
-  ADD_COUNTRY_FAV,
-  REMOVE_COUNTRY_FAV,
   FILTER_ACTIVITIES,
   REMOVE_ACTIVITY,
   ORDER_COUNTRIES,
@@ -77,20 +75,6 @@ export const searchCountries = (name) => {
     Axios.get(`${URL_COUNTRIES_SEARCH_COUNTRY}${name}`).then((response) => {
       dispatch(searchCountriesSuccess(response.data));
     });
-  };
-};
-
-export const addCountryFav = (alpha3code) => {
-  return {
-    type: ADD_COUNTRY_FAV,
-    payload: alpha3code,
-  };
-};
-
-export const removeCountryFav = (alpha3code) => {
-  return {
-    type: REMOVE_COUNTRY_FAV,
-    payload: alpha3code,
   };
 };
 

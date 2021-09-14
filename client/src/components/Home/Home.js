@@ -97,7 +97,7 @@ const Home = () => {
     setCurrentPage(page);
   };
 
-  // lo tuve que separar para que me resetee el valor de page una vez que selecciono otro filtro/orden // hace que orderCountries se despache 2 veces
+  // lo tuve que separar para que me resetee el valor de page una vez que selecciono otro filtro/orden // 
 
   useEffect(() => {
     if (filter === "All Countries" && order) dispatch(orderCountries(order, 0));
@@ -110,7 +110,7 @@ const Home = () => {
       dispatch(orderCountries(order, page - 1));
     if (filter !== "All Countries" && filter !== "Search" && order)
       dispatch(orderCountriesFiltered(filter, order, page - 1));
-  }, [dispatch, page, order, filter]); // order y filter las agregue por warning
+  }, [dispatch, page, order, filter]); // warning
 
   return (
     <>

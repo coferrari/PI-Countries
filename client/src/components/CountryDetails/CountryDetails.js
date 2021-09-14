@@ -122,8 +122,13 @@ const CountryDetails = () => {
             )}
             {countryDetails.Activities &&
               countryDetails.Activities.map((activity) => (
-                <div key={activity.id}>
-                  <h4 className={style.items}>{activity.name}</h4>
+                <div key={activity.id} className={style.cards}>
+                  <h4 className={style.titleAct}>{activity.name}</h4>
+                  <ul className={style.ul}>
+                    <li className={style.subitems}>season: {activity.season}</li>
+                    <li className={style.subitems}>difficulty: {activity.difficulty}</li>
+                    <li className={style.subitems}>duration: {activity.duration}'</li>
+                  </ul>
                 </div>
               ))}
             {countryDetails.Activities &&

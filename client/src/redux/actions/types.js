@@ -9,8 +9,6 @@ export const ORDER_FILTERED_COUNTRIES = 'ORDER_FILTERED_COUNTRIES';
 export const GET_ACTIVITIES = 'GET_ACTIVITIES';
 export const POST_ACTIVITY = 'POST_ACTIVITIES';
 export const FILTER_ACTIVITIES = 'FILTER_ACTIVITIES';
-export const ADD_COUNTRY_FAV = 'ADD_COUNTRY_FAV';
-export const REMOVE_COUNTRY_FAV = 'REMOVE_COUNTRY_FAV';
 export const REMOVE_ACTIVITY = 'REMOVE_ACTIVITY';
 export const URL_COUNTRIES = 'http://localhost:3001';
 export const URL_COUNTRIES_SEARCH_COUNTRY = 'http://localhost:3001/countries/search/country?name=';
