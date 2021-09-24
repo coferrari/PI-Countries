@@ -28,7 +28,6 @@ describe("Country model", () => {
           capital: "Buenos Aires",
           subregion: "South America",
           area: "2780400",
-          population: 43590400,
         })
         .then(() => done('Should not have been created'))
         .catch(() => done());
@@ -42,7 +41,6 @@ describe("Country model", () => {
           capital: "Buenos Aires",
           subregion: "South America",
           area: "2780400",
-          population: 43590400,
         })
         .then(() => done('Should not have been created'))
         .catch(() => done());
@@ -57,7 +55,6 @@ describe("Country model", () => {
           capital: "Buenos Aires",
           subregion: "South America",
           area: "2780400",
-          population: 43590400,
         })
         .then(() => done('Should not have been created'))
         .catch(() => done());

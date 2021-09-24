@@ -25,7 +25,6 @@ describe("Country routes", () => {
         capital: "Buenos Aires",
         subregion: "South America",
         area: "2780400",
-        population: 43590400,
       })
     )
   );

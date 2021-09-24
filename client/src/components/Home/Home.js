@@ -34,11 +34,11 @@ const Home = () => {
     "Europe",
     "Oceania",
   ];
-  const sort = ["A to Z", "Z to A", "Population Up", "Population Down"];
+  const sort = ["A to Z", "Z to A", "Area Up", "Area Down"];
   const activities = ["All Activities", "Summer", "Fall", "Winter", "Spring"];
 
   const totalPages = [];
-  for (let i = 1; i < Math.ceil(countCountries / 9.75) + 1; i++) {
+  for (let i = 1; i <= Math.ceil(countCountries / 10); i++) {
     totalPages.push(i);
   }
 

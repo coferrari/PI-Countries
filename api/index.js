@@ -23,23 +23,26 @@ const axios = require("axios");
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { Country } = require("./src/db");
+const {
+  API_KEY
+} = process.env;
 
 // BULK CREATE
 // Syncing all the models at once.
 conn.sync({ force: true })
   .then(async () => {
-    const countriesApi = await axios.get('https://restcountries.eu/rest/v2/all');
+    const countriesApi = await axios.get('https://restcountries.com/v3/all');
     let countries = countriesApi.data;
     if (countries) {countries = countries.map(country => {
       return {
-        alpha3Code: country.alpha3Code,
-        name: country.name,
-        flag: country.flag,
+        alpha3Code: country.cca3,
+        name: country.name.common,
+        flag: country.flags[0],
         region: country.region,
-        capital: country.capital,
-        subregion: country.subregion,
+        capital: country.capital ? country.capital[0] : null,
+        subregion: country.region,
         area: country.area,
-        population: country.population
+        demonyms: country.demonyms? country.demonyms.eng.m : null
       }
     })
   };
