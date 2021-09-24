@@ -40,7 +40,7 @@ conn.sync({ force: true })
         flag: country.flags[0],
         region: country.region,
         capital: country.capital ? country.capital[0] : null,
-        subregion: country.region,
+        subregion: country.subregion,
         area: country.area,
         demonyms: country.demonyms? country.demonyms.eng.m : null
       }
