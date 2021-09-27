@@ -4,12 +4,17 @@
     position: relative;
     padding: 0px 20px;
     display: grid;
+    justify-content: center;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     max-width: 1400px;
-    justify-items: center;
 }
 
+.center {
+    display: grid;
+    justify-items: center;
+    justify-content: center;
+}
 .noMatch {
     display: flex;
     position: relative;

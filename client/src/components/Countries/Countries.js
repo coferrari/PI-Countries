@@ -9,6 +9,7 @@ const Countries = ({ currentCountries }) => {
   return (
     <>
       {state.loading && <div>Loading...</div>}
+      <div className={style.center}>
       <div className={style.countriesContainer}>
         {state.countries.length >= 1 &&
           state.countries.map((country) => (
@@ -24,6 +25,8 @@ const Countries = ({ currentCountries }) => {
             </div>
           ))}
       </div>
+      </div>
+      <div className={style.center}>
       <div className={style.countriesContainer}>
         {!state.loading &&
           currentCountries &&
@@ -38,12 +41,15 @@ const Countries = ({ currentCountries }) => {
             />
           ))}
       </div>
+      </div>
+      <div className={style.center}>
       <div className={style.noMatch}>
         {!state.loading &&
           !state.currentCountries &&
           typeof state.countriesMatch === "string" && (
             <div>{state.countriesMatch}</div>
           )}
+      </div>
       </div>
     </>
   );
