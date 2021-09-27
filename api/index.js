@@ -26,7 +26,7 @@ const { Country } = require("./src/db");
 
 // BULK CREATE
 // Syncing all the models at once.
-conn.sync({ force: true })
+conn.sync({ force: false })
   .then(async () => {
     const countriesApi = await axios.get('https://restcountries.com/v3/all');
     let countries = countriesApi.data;

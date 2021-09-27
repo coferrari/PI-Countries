@@ -29,6 +29,7 @@ let sequelize =
         ssl: true,
       })
     : new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/countries`, {
+    // : new Sequelize(`postgres://${DB_USER}@${DB_HOST}/countries`, { // para uso local
         logging: false,
         native: false,
       });
