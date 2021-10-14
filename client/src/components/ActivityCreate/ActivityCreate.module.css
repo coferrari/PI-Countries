@@ -12,6 +12,7 @@
     top: 130px;
     padding: 40px;
     box-shadow: 5px 5px #d3d3d3;
+    /* max-width: 400px; */
 }
 .inputName {
     border: none;
@@ -27,7 +28,7 @@
 }
 
 .titleActivity {
-    font-size: 30px;
+    font-size: 26px;
     letter-spacing: 1px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -44,7 +45,7 @@
     color: #293241;
     font-family: 'Montserrat', sans-serif;
     font-weight: 200;
-    font-size: 24px;
+    font-size: 22px;
     text-transform: lowercase;
     left: 0px;
     display: inline-block;

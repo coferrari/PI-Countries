@@ -30,6 +30,7 @@ const Home = () => {
     "All Countries",
     "Africa",
     "Americas",
+    "Antarctic",
     "Asia",
     "Europe",
     "Oceania",

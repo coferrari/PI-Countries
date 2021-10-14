@@ -11,8 +11,8 @@ const Country = ({ alpha3Code, name, flag, region, capital }) => {
         </div>
         <div className={style.cardText}>
           <h4 className={style.cardTitle}>{name}</h4>
-          <p>capital: {capital ? capital : "-"}</p>
-          <p>region: {region}</p>
+          <p className={style.subtitle}>capital: {capital ? capital : "-"}</p>
+          <p className={style.subtitle}>region: {region}</p>
         </div>
       </div>
     </Link>

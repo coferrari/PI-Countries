@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { clearCountryDetail, getCountryDetail } from "../../redux/actions";
+import { clearCountryDetail, getCountryDetail, orderCountries } from "../../redux/actions";
 import style from "./CountryDetails.module.css";
 import back from "../../img/back.png";
 
